@@ -1,0 +1,14 @@
+{
+  "id": "sync_fifo",
+  "module": "sync_fifo",
+  "top": "sync_fifo",
+  "difficulty": "hard",
+  "bug_type": "missing_guard+simultaneous_rw",
+  "bug_description": "Read acceptance ignores empty, so reading an empty FIFO underflows the pointer/count (obvious from code vs spec); count update uses if/else-if so a simultaneous accepted read+write increments count instead of holding it (subtle). Neither is exercised by the visible TB.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 20,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/sync_fifo.v"]
+}

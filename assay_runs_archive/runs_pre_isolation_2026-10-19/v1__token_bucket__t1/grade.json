@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:122: $finish called at 181265000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! **The design is fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/token_bucket.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/token_bucket.v\n+++ b/rtl/token_bucket.v\n@@ -34,10 +34,12 @@\n     // Refill timer: one token every `rate` cycles\n     // ------------------------------------------------------------------\n-    assign refill = (timer == rate - 1'b1);\n+    assign refill = (rate != 0) && (timer >= rate - 1'b1);\n \n     always @(posedge clk or negedge rst_n) begin\n         if (!rst_n)\n             timer <= {RW{1'b0}};\n-        else if (refill)\n+        else if (rate == 0)\n+            timer <= {RW{1'b0}};\n+        else if (timer >= rate - 1'b1)\n             timer <= {RW{1'b0}};\n         else\n@@ -53,9 +55,7 @@\n \n     always @(*) begin\n-        tokens_nx = tokens;\n-        if (refill && tokens_nx != CAP_V)\n-            tokens_nx = tokens_nx + 1'b1;\n-        if (grant)\n-            tokens_nx = tokens_nx - 1'b1;\n+        tokens_nx = tokens - grant + refill;\n+        if (tokens_nx > CAP_V)\n+            tokens_nx = CAP_V;\n     end\n \n"
+}

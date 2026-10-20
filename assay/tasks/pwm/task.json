@@ -1,0 +1,15 @@
+{
+  "id": "pwm",
+  "module": "pwm",
+  "top": "pwm",
+  "difficulty": "medium",
+  "bug_type": "wrong_comparison+wrong_constant",
+  "bug_description": "(1) Output compare uses cnt <= duty_q (one extra high cycle; duty 0 is not fully off); (2) duty is latched when cnt==0 instead of cnt==255, so a new duty takes effect one cycle late and the first period after reset is not all-low.",
+  "visible_tb_weak": false,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 270,
+  "equiv_timeout_s": 300,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/pwm.v"]
+}

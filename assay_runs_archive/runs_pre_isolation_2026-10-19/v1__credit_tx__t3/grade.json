@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:130: $finish called at 130475000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! The fix is complete and working.",
+  "files_changed": [
+    {
+      "path": "rtl/credit_tx.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/credit_tx.v\n+++ b/rtl/credit_tx.v\n@@ -44,6 +44,6 @@\n     // Credit accounting\n     // ------------------------------------------------------------------\n-    wire [1:0]    ret         = credit_return ? credit_count : 2'd0;\n-    wire [CW-1:0] credits_ret = credits + ret;\n+    wire [1:0]      ret = credit_return ? credit_count : 2'd0;\n+    wire [CW:0]     S   = {1'b0, credits} - {{CW{1'b0}}, send} + {{CW-1{1'b0}}, ret};\n \n     always @(posedge clk or negedge rst_n) begin\n@@ -52,9 +52,9 @@\n             credit_err <= 1'b0;\n         end else begin\n-            if (credit_return) begin\n-                credit_err <= (credits_ret > N);\n-                credits    <= (credits_ret > N) ? N_V : credits_ret;\n-            end else if (send) begin\n-                credits    <= credits - 1'b1;\n+            if (S > N_V) begin\n+                credits    <= N_V;\n+                credit_err <= 1'b1;\n+            end else begin\n+                credits <= S[CW-1:0];\n             end\n         end\n"
+}

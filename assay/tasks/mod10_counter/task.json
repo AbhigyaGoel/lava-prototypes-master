@@ -1,0 +1,19 @@
+{
+  "id": "mod10_counter",
+  "module": "mod10_counter",
+  "top": "mod10_counter",
+  "difficulty": "easy",
+  "bug_type": "off_by_one",
+  "bug_description": "Invalid-BCD load clamp uses d > 10 instead of d > 9, so loading 10 puts q at 10 and the counter runs 10..15 before wrapping.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 30,
+  "reset": {
+    "port": "rst_n",
+    "active": 0
+  },
+  "files_in_scope": [
+    "rtl/mod10_counter.v"
+  ]
+}

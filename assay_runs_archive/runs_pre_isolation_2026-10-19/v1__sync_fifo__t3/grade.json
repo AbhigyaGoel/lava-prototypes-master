@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:87: $finish called at 63326000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! **The design is fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/sync_fifo.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/sync_fifo.v\n+++ b/rtl/sync_fifo.v\n@@ -20,5 +20,5 @@\n \n     wire wr_ok = wr_en && !full;\n-    wire rd_ok = rd_en;\n+    wire rd_ok = rd_en && !empty;\n \n     always @(posedge clk) begin\n@@ -40,5 +40,7 @@\n                 rd_ptr <= rd_ptr + 3'd1;\n             end\n-            if (wr_ok)\n+            if (wr_ok && rd_ok)\n+                count <= count;\n+            else if (wr_ok)\n                 count <= count + 4'd1;\n             else if (rd_ok)\n"
+}

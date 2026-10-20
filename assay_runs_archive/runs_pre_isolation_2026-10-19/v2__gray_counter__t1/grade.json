@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:39: $finish called at 2406000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is now fixed and all tests pass (`TEST PASSED`).",
+  "files_changed": [
+    {
+      "path": "rtl/gray_counter.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/gray_counter.v\n+++ b/rtl/gray_counter.v\n@@ -12,5 +12,5 @@\n             bin  <= 4'd0;\n             gray <= 4'd0;\n-        end else begin\n+        end else if (en) begin\n             bin  <= bin_next;\n             gray <= bin_next ^ (bin_next >> 1);\n"
+}

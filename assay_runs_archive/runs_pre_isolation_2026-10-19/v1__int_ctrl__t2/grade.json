@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:114: $finish called at 220535000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is now fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/int_ctrl.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/int_ctrl.v\n+++ b/rtl/int_ctrl.v\n@@ -32,7 +32,7 @@\n     always @(*) begin\n         irq_id = 3'd0;\n-        for (i = 0; i < 8; i = i + 1)\n+        for (i = 7; i >= 0; i = i - 1)\n             if (active[i])\n-                irq_id = i;\n+                irq_id = i[2:0];\n     end\n \n@@ -62,8 +62,10 @@\n         end else begin\n             for (j = 0; j < 8; j = j + 1) begin\n-                if (ack_vec[j])\n+                if (!mode[j])\n                     edge_pend[j] <= 1'b0;\n-                else if (mode[j] && rise[j])\n+                else if (rise[j])\n                     edge_pend[j] <= 1'b1;\n+                else if (ack_vec[j])\n+                    edge_pend[j] <= 1'b0;\n             end\n         end\n"
+}

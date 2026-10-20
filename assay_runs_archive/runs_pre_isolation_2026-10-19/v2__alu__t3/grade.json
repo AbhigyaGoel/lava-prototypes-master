@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:46: $finish called at 524288000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "sat-comb",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all tests pass (`TEST PASSED`).",
+  "files_changed": [
+    {
+      "path": "rtl/alu.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/alu.v\n+++ b/rtl/alu.v\n@@ -27,5 +27,5 @@\n                 y        = diff[7:0];\n                 carry    = diff[8];\n-                overflow = (a[7] == b[7]) && (diff[7] != a[7]);\n+                overflow = (a[7] != b[7]) && (diff[7] != a[7]);\n             end\n             OP_AND: y = a & b;\n@@ -34,5 +34,5 @@\n             OP_SLL: y = a << b[2:0];\n             OP_SRL: y = a >> b[2:0];\n-            OP_SLT: y = {7'd0, (a < b)};\n+            OP_SLT: y = {7'd0, ($signed(a) < $signed(b))};\n             default: y = 8'd0;\n         endcase\n"
+}

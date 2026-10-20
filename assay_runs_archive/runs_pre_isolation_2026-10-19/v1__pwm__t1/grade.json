@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:70: $finish called at 66950000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! **The design is now fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/pwm.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/pwm.v\n+++ b/rtl/pwm.v\n@@ -14,9 +14,9 @@\n         end else begin\n             cnt <= cnt + 8'd1;\n-            if (cnt == 8'h00)\n+            if (cnt == 8'd255)\n                 duty_q <= duty;\n         end\n     end\n \n-    assign pwm_out = (cnt <= duty_q);\n+    assign pwm_out = (cnt < duty_q);\n endmodule\n"
+}

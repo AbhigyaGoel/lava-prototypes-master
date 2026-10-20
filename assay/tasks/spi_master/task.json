@@ -1,0 +1,14 @@
+{
+  "id": "spi_master",
+  "module": "spi_master",
+  "top": "spi_master",
+  "difficulty": "hard",
+  "bug_type": "wrong_case_arm+unlatched_config",
+  "bug_description": "Mode-3 arm of the sample-edge table selects the falling edge (mode 3 behaves like mode 2; loopback still works); the half-period compare uses the live div input instead of the value latched at start, so changing div mid-transfer corrupts timing (subtle).",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 20,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/spi_master.v"]
+}

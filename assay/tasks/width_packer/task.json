@@ -1,0 +1,14 @@
+{
+  "id": "width_packer",
+  "module": "width_packer",
+  "top": "width_packer",
+  "difficulty": "hard",
+  "bug_type": "wrong_ready+wrong_priority",
+  "bug_description": "in_ready ignores in_last (uses only count==3), so a short-packet last beat is accepted while the output register is stalled and overwrites the waiting word (subtle back-pressure corner); in the output register a delivery takes priority over a simultaneously completed word, so the new word is dropped when pop and complete coincide (subtle, e.g. back-to-back 1-byte packets).",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 15,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/width_packer.v"]
+}

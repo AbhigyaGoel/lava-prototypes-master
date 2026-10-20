@@ -1,0 +1,14 @@
+{
+  "id": "seq_detector",
+  "module": "seq_detector",
+  "top": "seq_detector",
+  "difficulty": "medium",
+  "bug_type": "fsm_wrong_transition",
+  "bug_description": "From S101 on din=0 the FSM goes to IDLE instead of S10, losing the overlapping '10' prefix (misses e.g. 1010 11).",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 20,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/seq_detector.v"]
+}

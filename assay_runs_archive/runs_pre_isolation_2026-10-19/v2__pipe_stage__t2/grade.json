@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:82: $finish called at 65275000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all tests pass (`TEST PASSED`).",
+  "files_changed": [
+    {
+      "path": "rtl/pipe_stage.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/pipe_stage.v\n+++ b/rtl/pipe_stage.v\n@@ -12,5 +12,5 @@\n     reg [7:0] skid_data;\n \n-    assign in_ready = !skid_valid || out_ready;\n+    assign in_ready = !skid_valid;\n \n     wire push = in_valid && in_ready;\n@@ -27,4 +27,5 @@\n                 out_valid  <= 1'b1;\n                 out_data   <= skid_data;\n+                skid_valid <= 1'b0;\n             end else begin\n                 out_valid <= push;\n"
+}

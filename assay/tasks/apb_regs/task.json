@@ -1,0 +1,14 @@
+{
+  "id": "apb_regs",
+  "module": "apb_regs",
+  "top": "apb_regs",
+  "difficulty": "hard",
+  "bug_type": "reserved_bit_writable+wrong_set_clear_priority+wrong_status_field",
+  "bug_description": "CTRL reserved bit 3 is writable and reads back 1 (moderate); INT_STATUS update is (ists | event) & ~clr so a software clear beats a same-cycle hardware event, losing it (subtle); STATUS[5] reports |INT_STATUS (any pending) instead of irq = |(INT_STATUS & INT_EN) (subtle).",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 10,
+  "reset": {"port": "presetn", "active": 0},
+  "files_in_scope": ["rtl/apb_regs.v"]
+}

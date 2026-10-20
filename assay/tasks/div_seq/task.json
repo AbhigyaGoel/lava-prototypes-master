@@ -1,0 +1,14 @@
+{
+  "id": "div_seq",
+  "module": "div_seq",
+  "top": "div_seq",
+  "difficulty": "hard",
+  "bug_type": "missing_busy_guard+wrong_priority+unlatched_operand",
+  "bug_description": "start is not ignored while busy (restarts the division); abort loses to the final iteration, so an abort on the last step still completes with done (subtle); div0 is computed from the live divisor input at completion instead of the divisor captured at start (subtle).",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 15,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/div_seq.v"]
+}

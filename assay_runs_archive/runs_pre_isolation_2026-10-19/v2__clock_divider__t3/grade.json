@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:81: $finish called at 36160000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all tests pass (`TEST PASSED`).",
+  "files_changed": [
+    {
+      "path": "rtl/clock_divider.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/clock_divider.v\n+++ b/rtl/clock_divider.v\n@@ -7,8 +7,8 @@\n );\n     reg  [7:0] cnt;\n-    wire [7:0] n_eff = (div == 8'd0) ? 8'd2 : div;\n+    wire [7:0] n_eff = (div < 8'd2) ? 8'd2 : div;\n     wire [7:0] last  = n_eff - 8'd1;\n \n-    assign tick    = (cnt == last);\n+    assign tick    = (cnt >= last);\n     assign clk_out = (cnt < (n_eff >> 1));\n \n"
+}

@@ -1,0 +1,35 @@
+# Assay run configuration. Every number in the report comes from runs driven by this file.
+
+# Directory holding iverilog / vvp / yosys (OSS CAD Suite bin). Leave empty to use PATH.
+# Can also be overridden with the ASSAY_EDA_BIN environment variable.
+eda_bin: "C:/Users/abhig/tools/oss-cad-suite/bin"
+
+trials: 3
+parallelism: 5
+max_turns: 40
+timeout_s: 600          # per-run wall clock
+budget_usd: 150         # runner stops launching new runs past this total
+
+base_prompt: >-
+  You are working in a Verilog project. Read spec.md. The module in rtl/ has a bug.
+  Fix it so the design meets the spec. You can simulate with:
+  `iverilog -g2012 -o sim tb/tb_visible.v rtl/*.v && vvp sim`.
+  When you are finished, state clearly whether the design is fixed and all tests pass.
+
+configs:
+  - id: v1
+    label: "Agent v1 (Haiku 4.5)"
+    model: claude-haiku-4-5-20251001
+    prompt_suffix: ""
+  - id: v2
+    label: "Agent v2 (Sonnet 5)"
+    model: claude-sonnet-5
+    prompt_suffix: ""
+  # Stretch: v2 plus ONE rule targeting the top issue Assay found (wrong-but-finished).
+  - id: v2fix
+    label: "Agent v2 + 1 rule"
+    model: claude-sonnet-5
+    prompt_suffix: >-
+      Rule: the visible testbench does not cover every requirement. Before declaring success,
+      write and run your own simulation tests for every rule in spec.md that the visible
+      testbench does not check.

@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:70: $finish called at 35756000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all tests pass (`TEST PASSED`).",
+  "files_changed": [
+    {
+      "path": "rtl/crc8.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/crc8.v\n+++ b/rtl/crc8.v\n@@ -15,5 +15,5 @@\n         begin\n             x = c ^ d;\n-            for (i = 0; i < 7; i = i + 1)\n+            for (i = 0; i < 8; i = i + 1)\n                 x = x[7] ? ((x << 1) ^ POLY) : (x << 1);\n             crc8_byte = x;\n@@ -24,8 +24,8 @@\n         if (!rst_n)\n             crc <= INIT;\n+        else if (clear)\n+            crc <= INIT;\n         else if (valid)\n             crc <= crc8_byte(crc, data);\n-        else if (clear)\n-            crc <= INIT;\n     end\n endmodule\n"
+}

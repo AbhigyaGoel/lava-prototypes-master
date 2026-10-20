@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:27: $finish called at 256000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "sat-comb",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Fixed.",
+  "files_changed": [
+    {
+      "path": "rtl/priority_encoder.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/priority_encoder.v\n+++ b/rtl/priority_encoder.v\n@@ -12,9 +12,9 @@\n             8'b001?????: y = 3'd5;\n             8'b0001????: y = 3'd4;\n-            8'b00001???: y = 3'd2;\n+            8'b00001???: y = 3'd3;\n             8'b000001??: y = 3'd2;\n             8'b0000001?: y = 3'd1;\n             8'b00000001: y = 3'd0;\n-            default:     y = 3'd7;\n+            default:     y = 3'd0;\n         endcase\n     end\n"
+}

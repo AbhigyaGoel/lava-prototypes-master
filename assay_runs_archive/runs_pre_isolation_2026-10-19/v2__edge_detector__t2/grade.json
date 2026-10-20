@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:52: $finish called at 35280000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Fixed.",
+  "files_changed": [
+    {
+      "path": "rtl/edge_detector.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/edge_detector.v\n+++ b/rtl/edge_detector.v\n@@ -13,5 +13,5 @@\n             sync1 <= 1'b0;\n             sync2 <= 1'b0;\n-            prev  <= 1'b1;\n+            prev  <= 1'b0;\n         end else begin\n             sync1 <= din;\n@@ -21,5 +21,5 @@\n     end\n \n-    assign rise = sync1 & ~sync2;\n+    assign rise = sync2 & ~prev;\n     assign fall = ~sync2 & prev;\n     assign any  = sync2 ^ prev;\n"
+}

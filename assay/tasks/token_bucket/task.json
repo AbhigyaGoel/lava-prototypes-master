@@ -1,0 +1,14 @@
+{
+  "id": "token_bucket",
+  "module": "token_bucket",
+  "top": "token_bucket",
+  "difficulty": "hard",
+  "bug_type": "missing_disable_case+wrong_comparison+wrong_update_order",
+  "bug_description": "rate==0 is not treated as 'refill disabled' (timer wraps and refills every 256 cycles) (moderate); refill compares timer == rate-1 instead of >=, so lowering rate below the elapsed count skips refills until the 8-bit timer wraps (subtle); refill is saturated before the grant is subtracted, so a grant and refill in the same cycle at full capacity loses a token (subtle).",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 12,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/token_bucket.v"]
+}

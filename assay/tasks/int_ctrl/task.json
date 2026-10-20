@@ -1,0 +1,14 @@
+{
+  "id": "int_ctrl",
+  "module": "int_ctrl",
+  "top": "int_ctrl",
+  "difficulty": "hard",
+  "bug_type": "wrong_priority_order+set_clear_priority+missing_state_clear",
+  "bug_description": "(1) irq_id loop scans upward so the highest active index wins instead of the lowest (moderate); (2) acknowledge is given priority over a same-cycle rising edge of the same source, losing the new event (subtle); (3) edge_pend is not cleared while a source is in level mode, so a pending bit survives an edge->level->edge mode switch (subtle).",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 12,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/int_ctrl.v"]
+}

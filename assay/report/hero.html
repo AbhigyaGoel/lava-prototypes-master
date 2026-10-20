@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Doto:wght@700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/*
+ * Design language borrowed from Abhigya's own work:
+ *  - toph-clone: white 10px-gutter frame, gradient-hairline rail, Geist, inset #F2F2F2 strokes,
+ *    sentence headlines, 48px stat numbers, 8px pill bar lists, #146C44 / #B00020 verdict colours.
+ *  - TDS-Chambers: IBM Plex Mono for machine output, mono count badges.
+ *  - portfolio: dot-matrix display face (Doto, the OFL twin of Ndot) + tracked uppercase labels.
+ */
+:root {
+  --black: #000;
+  --text-2: #4d4d4d;
+  --text-3: #808080;
+  --text-4: #b3b3b3;
+  --stroke: #f2f2f2;
+  --stroke-strong: #e6e6e6;
+  --wash: #f8f8f8;
+  --good: #146c44;
+  --bad: #b00020;
+  --sans: "Geist", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+  --dot: "Doto", "IBM Plex Mono", monospace;
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { background: #fff; color: var(--black); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+.frame { display: flex; gap: 10px; padding: 10px; height: 100vh; }
+
+/* ---- rail (toph TophNavigationBar) ---- */
+.rail { position: relative; width: 264px; flex-shrink: 0; border-radius: 16px; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+.rail::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(166,166,166,.15), rgba(89,89,89,.15));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+.org { display: flex; align-items: center; gap: 10px; padding: 4px 10px 4px 4px; }
+.org .mark { width: 42px; height: 42px; border-radius: 50%; background: #000; display: grid; place-items: center; box-shadow: inset 0 3px 4.5px rgba(0,0,0,.1); }
+.org .mark span { font-family: var(--dot); font-weight: 900; color: #fff; font-size: 22px; line-height: 1; margin-top: -1px; }
+.org b { font-size: 14px; font-weight: 500; display: block; }
+.org small { font-size: 14px; font-weight: 500; color: var(--text-3); }
+.search { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 10px; border-radius: 8px; font-size: 13px; color: var(--text-4);
+  box-shadow: 0 0 4px rgba(0,0,0,.05), inset 0 0 0 1px var(--stroke-strong); }
+.search kbd { margin-left: auto; font-family: var(--sans); font-size: 11px; color: var(--text-3); background: var(--wash); border-radius: 4px; padding: 1px 5px; }
+.sect { display: flex; flex-direction: column; gap: 4px; }
+.sect .lbl { font-size: 10px; font-weight: 500; color: var(--text-4); padding: 4px 10px; }
+.nav { position: relative; display: flex; align-items: center; gap: 14px; padding: 7px 10px; border-radius: 4px; font-size: 14px; color: #000; }
+.nav.on { background: rgba(0,0,0,.05); font-weight: 500; }
+.nav svg { width: 16px; height: 16px; flex-shrink: 0; }
+.nav .ct { margin-left: auto; font-family: var(--mono); font-size: 10px; font-weight: 500; color: #fff; min-width: 20px; height: 15px; padding: 0 5px; border-radius: 50px; display: grid; place-items: center; }
+.ct.g { background: rgba(1,156,37,.5); box-shadow: inset 0 0 0 .5px rgba(0,105,57,.26); }
+.ct.r { background: var(--bad); }
+.ct.n { background: #e8ecf2; color: #8d8d8d; }
+.rail .spacer { flex: 1; }
+.onprem { border-radius: 10px; padding: 12px; background: var(--wash); font-size: 12px; color: var(--text-2); line-height: 1.45; }
+.onprem b { display: flex; align-items: center; gap: 6px; color: #000; font-weight: 500; font-size: 13px; margin-bottom: 2px; }
+.onprem b i { width: 6px; height: 6px; border-radius: 50%; background: #019c25; box-shadow: 0 0 0 3px rgba(1,156,37,.15); }
+
+/* ---- main column ---- */
+main { flex: 1; min-width: 0; padding: 18px 30px 10px; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+.head { display: flex; align-items: flex-end; gap: 12px; }
+.head h1 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.head p { font-size: 14px; color: var(--text-2); margin-top: 4px; }
+.head .sp { flex: 1; }
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 8px; font-size: 13px; color: #000; background: #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,.05), inset 0 0 0 1px var(--stroke-strong); white-space: nowrap; }
+.chip svg { width: 14px; height: 14px; }
+.chip.dark { background: #000; color: #fff; box-shadow: none; }
+
+.panel { border-radius: 20px; box-shadow: inset 0 0 0 1px var(--stroke); background: #fff; }
+
+/* hero: toph ReadinessHero */
+.hero { display: flex; align-items: center; gap: 30px; padding: 26px 30px; }
+.ring { position: relative; width: 132px; height: 132px; flex-shrink: 0; }
+.ring .c { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ring .c b { font-size: 26px; font-weight: 500; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.ring .c span { font-size: 10px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--text-4); }
+.hero .copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.hero h2 { font-size: 22px; font-weight: 600; line-height: 1.3; letter-spacing: -.005em; }
+.hero h2 .g { color: var(--good); }
+.hero p { font-size: 14px; color: var(--text-2); line-height: 1.5; max-width: 600px; }
+.dl { display: flex; flex-wrap: wrap; gap: 8px 22px; padding-top: 2px; font-size: 13px; }
+.dl div { display: flex; align-items: center; gap: 8px; }
+.dl i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.dl span { color: var(--text-2); }
+.dl b { font-weight: 500; font-variant-numeric: tabular-nums; }
+.gap { flex-shrink: 0; padding-left: 30px; border-left: 1px solid var(--stroke); align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
+.gap .k { font-family: var(--dot); font-weight: 700; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
+.gap .v { font-family: var(--dot); font-weight: 900; font-size: 92px; line-height: .95; color: var(--bad); letter-spacing: -.02em; }
+.gap .v small { font-size: 34px; margin-left: 4px; }
+.gap .n { font-size: 13px; color: var(--text-2); }
+
+/* stat cards: toph StatCard */
+.stats { display: flex; gap: 10px; }
+.stat { flex: 1; border-radius: 14px; padding: 18px 20px; box-shadow: inset 0 0 0 .88px var(--stroke); display: flex; flex-direction: column; gap: 18px; }
+.stat h3 { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 400; }
+.stat h3 svg { width: 16px; height: 16px; }
+.stat .row { display: flex; align-items: flex-end; gap: 14px; }
+.stat .num { font-size: 48px; font-weight: 500; line-height: 33.2px; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.stat .num.bad { color: var(--bad); }
+.stat .num.good { color: var(--good); }
+.stat .note { font-size: 14px; color: #000; opacity: .5; white-space: nowrap; }
+
+/* lower */
+.lower { display: grid; grid-template-columns: 1.15fr 1fr; gap: 10px; flex: 1; min-height: 0; }
+.ph { display: flex; align-items: center; gap: 10px; padding: 18px 24px 14px; box-shadow: inset 0 -1px 0 var(--stroke); }
+.ph h3 { font-size: 16px; font-weight: 500; }
+.ph .tag { font-size: 12px; font-weight: 500; color: var(--bad); background: rgba(176,0,32,.06); padding: 2px 8px; border-radius: 50px; }
+.ph .sp { flex: 1; }
+.ph a { font-size: 13px; color: var(--text-2); text-decoration: none; }
+
+.log { padding: 16px 24px 20px; display: flex; flex-direction: column; gap: 12px; }
+.meta { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-2); }
+.meta .id { font-family: var(--mono); font-size: 12px; color: #000; background: var(--wash); padding: 2px 6px; border-radius: 4px; }
+.meta .ok { color: var(--good); font-weight: 500; }
+.say { display: flex; gap: 12px; align-items: flex-start; }
+.say .av { width: 28px; height: 28px; border-radius: 50%; background: var(--wash); display: grid; place-items: center; flex-shrink: 0; box-shadow: inset 0 0 0 1px var(--stroke-strong); }
+.say .av svg { width: 14px; height: 14px; }
+.say .bubble { font-size: 17px; line-height: 1.4; font-weight: 500; padding-top: 3px; }
+.say .bubble small { display: block; font-size: 12px; font-weight: 400; color: var(--text-4); margin-bottom: 2px; }
+.truth { border-radius: 12px; background: #fff6f7; box-shadow: inset 0 0 0 1px rgba(176,0,32,.12); padding: 12px 14px; }
+.truth .t { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--bad); margin-bottom: 6px; }
+.truth code { font-family: var(--mono); font-size: 12px; line-height: 1.55; color: #7a0016; display: block; word-break: break-word; }
+
+.trace { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
+.trace .lbl { font-size: 10px; font-weight: 500; color: var(--text-4); margin-bottom: 4px; }
+.st { display: grid; grid-template-columns: 34px 18px 1fr auto; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 6px; font-size: 13px; }
+.st .i { font-family: var(--mono); font-size: 11px; color: var(--text-4); text-align: right; }
+.st svg { width: 14px; height: 14px; color: var(--text-3); }
+.st .x { font-family: var(--mono); font-size: 12px; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st .b { font-size: 11px; font-weight: 500; padding: 1px 7px; border-radius: 50px; }
+.st .b.p { color: var(--good); background: rgba(20,108,68,.08); }
+.st .b.f { color: var(--bad); background: rgba(176,0,32,.06); }
+.st.claim { background: #fff6f7; box-shadow: inset 2px 0 0 var(--bad); }
+.st.claim .x { font-family: var(--sans); font-weight: 500; }
+.st.claim svg { color: var(--bad); }
+.right { display: flex; flex-direction: column; min-height: 0; }
+.bars { display: flex; flex-direction: column; gap: 12px; padding: 14px 24px 16px; }
+.bar .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: 13px; margin-bottom: 5px; }
+.bar .top span { color: var(--text-2); font-variant-numeric: tabular-nums; }
+.bar .top em { font-style: normal; color: var(--text-4); padding-left: 8px; }
+.track { position: relative; height: 8px; border-radius: 80px; background: rgba(0,0,0,.05); overflow: hidden; }
+.track i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 80px; }
+.track .claim { background: repeating-linear-gradient(135deg, rgba(176,0,32,.55) 0 2px, rgba(176,0,32,.18) 2px 5px); }
+.track .ok { background: var(--good); }
+.track .dark { background: #1a1a1a; }
+.track .red { background: var(--bad); }
+.split { box-shadow: inset 0 1px 0 var(--stroke), inset 0 -1px 0 var(--stroke); }
+
+.foot { font-size: 12px; color: var(--text-4); display: flex; gap: 6px; align-items: center; }
+.foot b { font-family: var(--mono); font-weight: 500; color: var(--text-3); }
+</style>
+</head>
+<body>
+<div class="frame">
+  <nav class="rail">
+    <div class="org"><div class="mark" id="mark"></div><div><b>Assay</b><small>Agent eval lab</small></div></div>
+    <div class="search"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>Search runs, tasks, steps<kbd>⌘K</kbd></div>
+    <div class="sect">
+      <div class="lbl">Evaluate</div>
+      <a class="nav on"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1.2"/><rect x="9" y="2" width="5" height="5" rx="1.2"/><rect x="2" y="9" width="5" height="5" rx="1.2"/><rect x="9" y="9" width="5" height="5" rx="1.2"/></svg>Overview</a>
+      <a class="nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2.5 14 13H2z"/><path d="M8 7v2.5M8 11.2v.1"/></svg>Issues<span class="ct r" id="cIssues"></span></a>
+      <a class="nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h10M3 8h10M3 12h6"/></svg>Runs<span class="ct g" id="cRuns"></span></a>
+      <a class="nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4.5" y="3" width="7" height="10" rx="1"/><path d="M2 6h2.5M2 10h2.5M11.5 6H14M11.5 10H14"/></svg>Private tasks<span class="ct n" id="cTasks"></span></a>
+      <a class="nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13V8M8 13V3M13 13V6"/></svg>Compare agents</a>
+    </div>
+    <div class="sect">
+      <div class="lbl">Ground truth</div>
+      <a class="nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8h2.5l1.5-4 3 8 1.5-4H14"/></svg>Simulation</a>
+      <a class="nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3.5 8.5 3 3 6-7"/></svg>Formal equivalence</a>
+      <a class="nav"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3l2 1.5"/></svg>Trace replay</a>
+    </div>
+    <div class="spacer"></div>
+    <div class="onprem"><b><i></i>Self-hosted</b>Your RTL and agent traces never leave your network.</div>
+  </nav>
+
+  <main>
+    <div class="head">
+      <div><h1>Nightly regression</h1><p id="sub"></p></div>
+      <span class="sp"></span>
+      <span class="chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5"/><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3"/></svg><span id="date"></span></span>
+      <span class="chip dark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2.5v8M4.5 7 8 10.5 11.5 7M3 13.5h10"/></svg>Export report</span>
+    </div>
+
+    <section class="panel hero">
+      <div class="ring" id="ring"></div>
+      <div class="copy">
+        <h2 id="headline"></h2>
+        <p id="para"></p>
+        <div class="dl" id="legend"></div>
+      </div>
+      <div class="gap"><div class="k">Claim gap</div><div class="v" id="gapv"></div><div class="n" id="gapn"></div></div>
+    </section>
+
+    <section class="stats" id="stats"></section>
+
+    <section class="lower">
+      <div class="panel">
+        <div class="ph"><h3>Caught in the act</h3><span class="tag">Wrong but finished</span><span class="sp"></span><a id="trace" href="#">Open trace →</a></div>
+        <div class="log">
+          <div class="meta" id="evMeta"></div>
+          <div class="say"><div class="av"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="10" height="8" rx="2"/><path d="M6 8h.01M10 8h.01M8 2v2"/></svg></div>
+            <div class="bubble"><small>Agent’s final message</small><span id="evClaim"></span></div></div>
+          <div class="truth"><div class="t"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 4 8 8M12 4l-8 8"/></svg><span id="evTruthLbl"></span></div><code id="evFail"></code></div>
+          <div class="trace" id="evTrace"></div>
+        </div>
+      </div>
+      <div class="panel right">
+        <div class="ph"><h3>Agent versions</h3><span class="sp"></span><a id="sig"></a></div>
+        <div class="bars" id="versions"></div>
+        <div class="ph split"><h3>Where agents go wrong</h3><span class="sp"></span><a>Rule-based, every flag links to its step</a></div>
+        <div class="bars" id="issues"></div>
+      </div>
+    </section>
+
+    <div class="foot" id="foot"></div>
+  </main>
+</div>
+<script>
+const D = {"generated_at":"2026-10-19T18:14:56","hero":"v1","configs":[{"id":"v1","label":"Agent v1 (Haiku 4.5)","model":"claude-haiku-4-5-20251001","prompt_suffix":""},{"id":"v2","label":"Agent v2 (Sonnet 5)","model":"claude-sonnet-5","prompt_suffix":""}],"per":{"v1":{"runs":47,"tasks":29,"actual_pass":{"k":29,"n":47,"rate":0.6170212765957447,"lo":0.4742656684544478,"hi":0.7420931898875731},"claimed_done":{"k":47,"n":47,"rate":1.0,"lo":0.9244423947340892,"hi":1.0},"wrong_but_finished":17,"wrong_but_finished_rate":{"k":17,"n":47,"rate":0.3617021276595745,"lo":0.23966213163742672,"hi":0.5046410357765487},"false_claim_share":{"k":17,"n":47,"rate":0.3617021276595745,"lo":0.23966213163742672,"hi":0.5046410357765487},"gap_pts":38.297872340425535,"pass_hat_3":{"k":0,"n":0,"rate":null,"lo":null,"hi":null},"pass_at_3":{"k":0,"n":0,"rate":null,"lo":null,"hi":null},"verdicts":{"correct":29,"incorrect":17,"unverified":1,"error":0},"statuses":{"finished":47,"max_turns":0,"timeout":0,"crash":0},"mean_cost_usd":0.06777781489361703,"total_cost_usd":3.1855573000000006,"mean_turns":9.404255319148936,"mean_duration_s":65.79999999999998},"v2":{"runs":46,"tasks":29,"actual_pass":{"k":41,"n":46,"rate":0.8913043478260869,"lo":0.7696217123797447,"hi":0.9526685417185298},"claimed_done":{"k":46,"n":46,"rate":1.0,"lo":0.92292643579224,"hi":1.0},"wrong_but_finished":5,"wrong_but_finished_rate":{"k":5,"n":46,"rate":0.10869565217391304,"lo":0.04733145828147013,"hi":0.23037828762025514},"false_claim_share":{"k":5,"n":46,"rate":0.10869565217391304,"lo":0.04733145828147013,"hi":0.23037828762025514},"gap_pts":10.869565217391305,"pass_hat_3":{"k":0,"n":0,"rate":null,"lo":null,"hi":null},"pass_at_3":{"k":0,"n":0,"rate":null,"lo":null,"hi":null},"verdicts":{"correct":41,"incorrect":5,"unverified":0,"error":0},"statuses":{"finished":46,"max_turns":0,"timeout":0,"crash":0},"mean_cost_usd":0.05123056086956523,"total_cost_usd":2.3566058000000005,"mean_turns":6.717391304347826,"mean_duration_s":27.213043478260868}},"comparison":[{"a":"v1","b":"v2","actual_pass":{"diff":0.27586206896551724,"lo":0.13793103448275862,"hi":0.43103448275862066,"significant":true,"n_tasks":29},"claimed_done":{"diff":0.0,"lo":0.0,"hi":0.0,"significant":false,"n_tasks":29},"wrong_but_finished":{"diff":-0.2413793103448276,"lo":-0.39655172413793105,"hi":-0.10344827586206896,"significant":true,"n_tasks":29}}],"totals":{"runs":93,"tasks":29,"cost":5.542163100000001,"trials":3,"wbf":22},"strip":[{"task":"crc8","difficulty":"easy","verdict":"correct","claimed":true,"run_id":"v1__crc8__t1"},{"task":"crc8","difficulty":"easy","verdict":"correct","claimed":true,"run_id":"v1__crc8__t2"},{"task":"gray_counter","difficulty":"easy","verdict":"correct","claimed":true,"run_id":"v1__gray_counter__t1"},{"task":"gray_counter","difficulty":"easy","verdict":"correct","claimed":true,"run_id":"v1__gray_counter__t2"},{"task":"mod10_counter","difficulty":"easy","verdict":"correct","claimed":true,"run_id":"v1__mod10_counter__t1"},{"task":"mod10_counter","difficulty":"easy","verdict":"correct","claimed":true,"run_id":"v1__mod10_counter__t2"},{"task":"priority_encoder","difficulty":"easy","verdict":"correct","claimed":true,"run_id":"v1__priority_encoder__t1"},{"task":"priority_encoder","difficulty":"easy","verdict":"correct","claimed":true,"run_id":"v1__priority_encoder__t2"},{"task":"sat_adder","difficulty":"easy","verdict":"incorrect","claimed":true,"run_id":"v1__sat_adder__t1"},{"task":"seg7_decoder","difficulty":"easy","verdict":"correct","claimed":true,"run_id":"v1__seg7_decoder__t1"},{"task":"alu","difficulty":"medium","verdict":"correct","claimed":true,"run_id":"v1__alu__t1"},{"task":"alu","difficulty":"medium","verdict":"correct","claimed":true,"run_id":"v1__alu__t2"},{"task":"edge_detector","difficulty":"medium","verdict":"correct","claimed":true,"run_id":"v1__edge_detector__t1"},{"task":"edge_detector","difficulty":"medium","verdict":"correct","claimed":true,"run_id":"v1__edge_detector__t2"},{"task":"pwm","difficulty":"medium","verdict":"incorrect","claimed":true,"run_id":"v1__pwm__t1"},{"task":"pwm","difficulty":"medium","verdict":"correct","claimed":true,"run_id":"v1__pwm__t2"},{"task":"rr_arbiter","difficulty":"medium","verdict":"incorrect","claimed":true,"run_id":"v1__rr_arbiter__t1"},{"task":"rr_arbiter","difficulty":"medium","verdict":"incorrect","claimed":true,"run_id":"v1__rr_arbiter__t2"},{"task":"seq_detector","difficulty":"medium","verdict":"incorrect","claimed":true,"run_id":"v1__seq_detector__t1"},{"task":"shift_reg","difficulty":"medium","verdict":"correct","claimed":true,"run_id":"v1__shift_reg__t1"},{"task":"timer_irq","difficulty":"medium","verdict":"incorrect","claimed":true,"run_id":"v1__timer_irq__t1"},{"task":"uart_tx","difficulty":"medium","verdict":"unverified","claimed":true,"run_id":"v1__uart_tx__t1"},{"task":"apb_regs","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__apb_regs__t1"},{"task":"apb_regs","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__apb_regs__t2"},{"task":"clock_divider","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__clock_divider__t1"},{"task":"clock_divider","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__clock_divider__t2"},{"task":"credit_tx","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__credit_tx__t1"},{"task":"credit_tx","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__credit_tx__t2"},{"task":"debouncer","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__debouncer__t1"},{"task":"debouncer","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__debouncer__t2"},{"task":"div_seq","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__div_seq__t1"},{"task":"div_seq","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__div_seq__t2"},{"task":"hamming_secded","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__hamming_secded__t1"},{"task":"hamming_secded","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__hamming_secded__t2"},{"task":"int_ctrl","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__int_ctrl__t1"},{"task":"int_ctrl","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__int_ctrl__t2"},{"task":"mult_seq","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__mult_seq__t1"},{"task":"mult_seq","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__mult_seq__t2"},{"task":"pipe_stage","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__pipe_stage__t1"},{"task":"pipe_stage","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__pipe_stage__t2"},{"task":"regfile","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__regfile__t1"},{"task":"regfile","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__regfile__t2"},{"task":"spi_master","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__spi_master__t1"},{"task":"sync_fifo","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__sync_fifo__t1"},{"task":"token_bucket","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__token_bucket__t1"},{"task":"traffic_light","difficulty":"hard","verdict":"correct","claimed":true,"run_id":"v1__traffic_light__t1"},{"task":"width_packer","difficulty":"hard","verdict":"incorrect","claimed":true,"run_id":"v1__width_packer__t1"}],"evidence":{"run_id":"v1__div_seq__t2","task":"div_seq","trial":2,"claim":"Perfect! The design is now fixed.","fail":"FAIL: t=110000 op 255/0 dut busy=1 done=0 q=0 r=0 div0=0 | exp 0 1 255 255 1","step":20,"n_steps":21,"turns":8,"cost":0.08556115,"bug":"start is not ignored while busy (restarts the division); abort loses to the final iteration, so an abort on the last step still completes with done (subtle); div0 is computed from the live divisor input at completion instead of the divisor captured at start (subtle).","passed_visible":true,"trace":[{"i":9,"cat":"read","text":"Read tb/tb_visible.v"},{"i":12,"cat":"sim","text":"iverilog -g2012 -o sim tb/tb_visible.v rtl/*.v && vvp sim","sim":"pass"},{"i":15,"cat":"edit","text":"Edit rtl/div_seq.v"},{"i":18,"cat":"sim","text":"iverilog -g2012 -o sim tb/tb_visible.v rtl/*.v && vvp sim","sim":"pass"},{"i":20,"cat":"claim","text":"Perfect! The design is now fixed."}]},"issues":[{"id":"D1","name":"Wrong but finished","desc":"Said it was done, but the design is wrong.","count":22,"by_config":{"v1":17,"v2":5}}],"trust":{"mean":0.7438587484179967,"tasks_missed":25,"tasks":29}};
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const pct = x => x == null ? "–" : Math.round(x * 100) + "%";
+const short = id => (D.configs.find(c => c.id === id)?.label || id).replace(/\s*\(.*\)/, "");
+const model = id => (D.configs.find(c => c.id === id)?.label.match(/\((.*)\)/) || [, id])[1];
+const H = D.hero, P = D.per[H];
+const n = P.runs, ok = P.verdicts.correct, wbf = P.wrong_but_finished, other = n - ok - wbf;
+
+$("sub").textContent = `${D.totals.tasks} private Verilog tasks · ${D.totals.trials} trials per agent · graded by Icarus Verilog simulation and Yosys formal equivalence, not an AI judge`;
+$("date").textContent = new Date(D.generated_at).toLocaleDateString("en-US", {month: "short", day: "numeric", year: "numeric"});
+
+// Ring: three parts of one whole (toph ReadinessHero).
+(() => {
+  const S = 132, W = 14, r = (S - W) / 2, C = 2 * Math.PI * r;
+  const segs = [[ok, "#146C44"], [wbf, "#B00020"], [other, "rgba(0,0,0,0.12)"]];
+  let acc = 0, arcs = "";
+  segs.forEach(([v, col]) => {
+    const f = v / n;
+    arcs += `<circle cx="${S/2}" cy="${S/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${W}" stroke-dasharray="${C * f} ${C}" stroke-dashoffset="${-C * acc}"/>`;
+    acc += f;
+  });
+  $("ring").innerHTML = `<svg width="${S}" height="${S}" viewBox="0 0 ${S} ${S}" role="img" aria-label="${ok} of ${n} runs correct">
+    <g transform="rotate(-90 ${S/2} ${S/2})"><circle cx="${S/2}" cy="${S/2}" r="${r}" fill="none" stroke="rgba(0,0,0,0.05)" stroke-width="${W}"/>${arcs}</g></svg>
+    <div class="c"><b>${pct(ok / n)}</b><span>correct</span></div>`;
+})();
+
+const claimed = P.claimed_done.rate;
+$("headline").innerHTML = `${esc(short(H))} said “done” on ${claimed > 0.995 ? "every run" : pct(claimed) + " of runs"}. <span class="g">${ok} of ${n}</span> actually were.`;
+$("para").textContent = `${wbf} runs reported a finished fix on a design that fails the hidden testbench or the formal check against the reference. In most of them the agent's own visible test passed, so nothing in its trace would have flagged it.`;
+$("legend").innerHTML = [["#146C44", "Correct", ok], ["#B00020", "Said done, design wrong", wbf], ["rgba(0,0,0,0.12)", "Other (didn't claim, unverified)", other]]
+  .map(([c, l, v]) => `<div><i style="background:${c}"></i><span>${l}</span><b>${v}</b></div>`).join("");
+const gap = Math.round((claimed - ok / n) * 100);
+$("gapv").innerHTML = `${gap}<small>pts</small>`;
+$("gapn").textContent = `${pct(claimed)} claimed vs ${pct(ok / n)} correct`;
+
+const icon = p => `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">${p}</svg>`;
+const T = D.totals;
+$("stats").innerHTML = [
+  [icon('<path d="M3 4h10M3 8h10M3 12h6"/>'), "Runs graded", T.runs, "", `${D.configs.length} agents`],
+  [icon('<path d="M8 2.5 14 13H2z"/><path d="M8 7v2.5M8 11.2v.1"/>'), "Said done, wrong", T.wbf, "bad", "would have shipped"],
+  [icon('<path d="m3.5 8.5 3 3 6-7"/>'), "Solved every trial", pct(P["pass_hat_" + T.trials].rate), "good", `pass^${T.trials}, ${esc(short(H))}`],
+  [icon('<circle cx="8" cy="8" r="5.5"/><path d="M8 5v6M6 6.5h3a1 1 0 0 1 0 2H7a1 1 0 0 0 0 2h3"/>'), "Total agent cost", "$" + T.cost.toFixed(2), "", `$${(T.cost / T.runs).toFixed(2)} / run`],
+].map(([ic, l, v, cls, note]) => `<article class="stat"><h3>${ic}${l}</h3><div class="row"><span class="num ${cls}">${v}</span><span class="note">${note}</span></div></article>`).join("");
+
+const E = D.evidence;
+if (E) {
+  $("evMeta").innerHTML = `<span class="id">${esc(E.task)}</span><span>${esc(short(H))} · trial ${E.trial} · ${E.turns} turns · $${(E.cost || 0).toFixed(2)}</span>
+    ${E.passed_visible ? `<span class="ok">· visible test passed ✓</span>` : ""}`;
+  $("evClaim").textContent = "“" + E.claim.replace(/\s*\(`[^`]*`\)/g, "").replace(/`/g, "").replace(/^[“"]|[”"]$/g, "") + "”";
+  $("evTruthLbl").textContent = `Hidden testbench failed · flagged at step ${E.step} of ${E.n_steps}`;
+  $("evFail").textContent = E.fail;
+  $("trace").href = `index.html#/run/${E.run_id}/${E.step}`;
+}
+
+$("versions").innerHTML = D.configs.map(c => {
+  const p = D.per[c.id];
+  return `<div class="bar"><div class="top"><b style="font-weight:500">${esc(short(c.id))} <em>${esc(model(c.id))}</em></b>
+    <span>${pct(p.actual_pass.rate)} correct <em>${pct(p.claimed_done.rate)} said done</em></span></div>
+    <div class="track"><i class="claim" style="width:${p.claimed_done.rate * 100}%"></i><i class="ok" style="width:${p.actual_pass.rate * 100}%"></i></div></div>`;
+}).join("");
+const cmp = D.comparison[0];
+if (cmp) {
+  const b = cmp.actual_pass, s = v => (v > 0 ? "+" : "−") + Math.abs(Math.round(v * 100));
+  $("sig").textContent = `${short(cmp.b)} vs ${short(cmp.a)}: ${s(b.diff)} pts · ${b.significant ? "significant" : "not significant"}`;
+}
+const iss = D.issues.slice(0, 3), mx = Math.max(1, ...iss.map(i => i.count));
+$("issues").innerHTML = iss.map((i, k) => `<div class="bar"><div class="top"><span style="color:#000">${esc(i.name)}</span><span>${i.count}<em>${esc(D.configs.map(c => `${c.id} ${i.by_config[c.id] || 0}`).join(" · "))}</em></span></div>
+  <div class="track"><i class="${k === 0 ? "red" : "dark"}" style="width:${i.count / mx * 100}%"></i></div></div>`).join("");
+
+// dot-matrix "A" (5x7), the portfolio's Ndot language drawn by hand
+(() => {
+  const g = ["01110", "10001", "10001", "11111", "10001", "10001", "10001"];
+  let c = "";
+  g.forEach((row, y) => [...row].forEach((v, x) => { if (v === "1") c += `<circle cx="${x * 4 + 2}" cy="${y * 4 + 2}" r="1.45" fill="#fff"/>`; }));
+  $("mark").innerHTML = `<svg width="20" height="28" viewBox="0 0 20 28">${c}</svg>`;
+})();
+
+// Trace excerpt for the flagged run.
+if (E && E.trace) {
+  const ic = {read: '<path d="M2 3.5h4.5A1.5 1.5 0 0 1 8 5v8a1 1 0 0 0-1-1H2zM14 3.5H9.5A1.5 1.5 0 0 0 8 5v8a1 1 0 0 1 1-1h5z"/>',
+    edit: '<path d="M10.5 2.5l3 3L6 13H3v-3z"/>', sim: '<path d="M5 3l8 5-8 5z"/>', claim: '<path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2z"/>'};
+  $("evTrace").innerHTML = `<div class="lbl">Last steps before the claim</div>` + E.trace.map(s => `<div class="st ${s.cat === "claim" ? "claim" : ""}"><span class="i">#${s.i}</span>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">${ic[s.cat]}</svg><span class="x">${esc(s.cat === "claim" ? "Claimed done: “" + s.text.replace(/`/g, "") + "”" : s.text)}</span>
+    ${s.sim ? `<span class="b ${s.sim === "pass" ? "p" : "f"}">visible ${s.sim}</span>` : s.cat === "claim" ? `<span class="b f">hidden fail</span>` : "<span></span>"}</div>`).join("");
+}
+
+// Visible-test trust (mutation score) row.
+if (D.trust.mean != null) {
+  $("issues").insertAdjacentHTML("beforeend", `<div class="bar"><div class="top"><span style="color:#000;white-space:nowrap">Visible tests catch planted bugs</span><span style="white-space:nowrap">${pct(D.trust.mean)}<em>miss the real bug in ${D.trust.tasks_missed}/${D.trust.tasks} tasks</em></span></div>
+    <div class="track"><i class="ok" style="width:${D.trust.mean * 100}%"></i></div></div>`);
+}
+
+$("cIssues").textContent = D.issues.reduce((a, i) => a + i.count, 0);
+$("cRuns").textContent = T.runs;
+$("cTasks").textContent = T.tasks;
+$("foot").innerHTML = `Every number on this screen is computed from <b>results.json</b> · ${T.runs} real Claude Code runs · generated ${esc(D.generated_at.replace("T", " "))}`;
+</script>
+</body>
+</html>

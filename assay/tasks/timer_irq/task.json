@@ -1,0 +1,14 @@
+{
+  "id": "timer_irq",
+  "module": "timer_irq",
+  "top": "timer_irq",
+  "difficulty": "medium",
+  "bug_type": "off_by_one+wrong_priority",
+  "bug_description": "Auto-reload loads reload_val-1 (period N-1 after the first, N=1 stops the timer); irq_clr has priority over a same-cycle expiry so the interrupt is lost.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 12,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/timer_irq.v"]
+}

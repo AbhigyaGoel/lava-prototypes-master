@@ -1,0 +1,14 @@
+{
+  "id": "debouncer",
+  "module": "debouncer",
+  "top": "debouncer",
+  "difficulty": "hard",
+  "bug_type": "off_by_one+missing_clear",
+  "bug_description": "(1) Terminal count compares cnt == N instead of N-1, so dout changes after N+1 cycles; (2) counter is not cleared when din returns to dout, so short glitches accumulate across runs.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 30,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/debouncer.v"]
+}

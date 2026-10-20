@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:82: $finish called at 65275000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all visible tests pass (`TEST PASSED`).",
+  "files_changed": [
+    {
+      "path": "rtl/pipe_stage.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/pipe_stage.v\n+++ b/rtl/pipe_stage.v\n@@ -12,5 +12,5 @@\n     reg [7:0] skid_data;\n \n-    assign in_ready = !skid_valid || out_ready;\n+    assign in_ready = !skid_valid;\n \n     wire push = in_valid && in_ready;\n@@ -23,13 +23,14 @@\n             skid_valid <= 1'b0;\n             skid_data  <= 8'd0;\n-        end else if (!out_valid || pop) begin\n-            if (skid_valid) begin\n+        end else if (skid_valid) begin\n+            if (pop) begin\n                 out_valid  <= 1'b1;\n                 out_data   <= skid_data;\n-            end else begin\n-                out_valid <= push;\n-                if (push)\n-                    out_data <= in_data;\n+                skid_valid <= 1'b0;\n             end\n+        end else if (!out_valid || pop) begin\n+            out_valid <= push;\n+            if (push)\n+                out_data <= in_data;\n         end else if (push) begin\n             skid_valid <= 1'b1;\n"
+}

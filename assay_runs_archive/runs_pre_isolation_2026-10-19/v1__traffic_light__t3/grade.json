@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:105: $finish called at 44880000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! The design is now **fixed and all tests pass**.",
+  "files_changed": [
+    {
+      "path": "rtl/traffic_light.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/traffic_light.v\n+++ b/rtl/traffic_light.v\n@@ -25,9 +25,9 @@\n         case (state)\n             MG: if (timer == MAIN_GREEN_T - 1 ||\n-                    (ped_pending && timer == MAIN_GREEN_MIN - 1))\n+                    (ped_pending && timer >= MAIN_GREEN_MIN - 1))\n                     next_state = MY;\n             MY: if (timer == MAIN_YELLOW_T - 1) next_state = SG;\n             SG: if (timer == SIDE_GREEN_T - 1)  next_state = SY;\n-            SY: if (timer == MAIN_YELLOW_T - 1) next_state = MG;\n+            SY: if (timer == SIDE_YELLOW_T - 1) next_state = MG;\n         endcase\n     end\n"
+}

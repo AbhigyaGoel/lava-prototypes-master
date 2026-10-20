@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:114: $finish called at 220535000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Design is fixed and all tests pass.** \u2713",
+  "files_changed": [
+    {
+      "path": "rtl/int_ctrl.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/int_ctrl.v\n+++ b/rtl/int_ctrl.v\n@@ -31,8 +31,13 @@\n \n     always @(*) begin\n-        irq_id = 3'd0;\n-        for (i = 0; i < 8; i = i + 1)\n-            if (active[i])\n-                irq_id = i;\n+        if (active[0]) irq_id = 3'd0;\n+        else if (active[1]) irq_id = 3'd1;\n+        else if (active[2]) irq_id = 3'd2;\n+        else if (active[3]) irq_id = 3'd3;\n+        else if (active[4]) irq_id = 3'd4;\n+        else if (active[5]) irq_id = 3'd5;\n+        else if (active[6]) irq_id = 3'd6;\n+        else if (active[7]) irq_id = 3'd7;\n+        else irq_id = 3'd0;\n     end\n \n@@ -62,8 +67,10 @@\n         end else begin\n             for (j = 0; j < 8; j = j + 1) begin\n-                if (ack_vec[j])\n+                if (!mode[j])\n                     edge_pend[j] <= 1'b0;\n-                else if (mode[j] && rise[j])\n+                else if (rise[j])\n                     edge_pend[j] <= 1'b1;\n+                else if (ack_vec[j])\n+                    edge_pend[j] <= 1'b0;\n             end\n         end\n"
+}

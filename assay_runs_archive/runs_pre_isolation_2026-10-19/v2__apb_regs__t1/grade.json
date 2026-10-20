@@ -1,0 +1,22 @@
+{
+  "verdict": "incorrect",
+  "hidden_sim": {
+    "passed": false,
+    "reason": "fail_marker",
+    "output_tail": "...t=33/33 (got/exp) ists=f ien=0\nFAIL: t=79941000 sel=1 en=1 wr=0 addr=04 | prdata=00000022/00000002 pslverr=0/0 irq=0/0 ctrl_out=02/02 (got/exp) ists=9 ien=2\nFAIL: t=90901000 sel=1 en=1 wr=0 addr=04 | prdata=0000003f/0000001f pslverr=0/0 irq=0/0 ctrl_out=c1/c1 (got/exp) ists=b ien=4\nFAIL: t=96881000 sel=1 en=1 wr=0 addr=04 | prdata=00000037/00000017 pslverr=0/0 irq=0/0 ctrl_out=65/65 (got/exp) ists=1 ien=6\nFAIL: t=100391000 sel=1 en=1 wr=0 addr=04 | prdata=00000024/00000004 pslverr=0/0 irq=0/0 ctrl_out=06/06 (got/exp) ists=f ien=0\nFAIL: t=102561000 sel=1 en=1 wr=0 addr=04 | prdata=00000037/00000017 pslverr=0/0 irq=0/0 ctrl_out=d5/d5 (got/exp) ists=3 ien=0\nFAIL: t=102761000 sel=1 en=1 wr=0 addr=04 | prdata=0000003a/0000001a pslverr=0/0 irq=0/0 ctrl_out=d5/d5 (got/exp) ists=7 ien=0\nFAIL: t=103311000 sel=1 en=1 wr=0 addr=04 | prdata=00000039/00000019 pslverr=0/0 irq=0/0 ctrl_out=d5/d5 (got/exp) ists=6 ien=8\nFAIL: t=117521000 sel=1 en=1 wr=0 addr=04 | prdata=00000037/00000017 pslverr=0/0 irq=0/0 ctrl_out=b3/b3 (got/exp) ists=f ien=0\nFAIL: t=134461000 sel=1 en=1 wr=0 addr=04 | prdata=00000020/00000000 pslverr=0/0 irq=0/0 ctrl_out=60/60 (got/exp) ists=b ien=0\nFAIL: t=136391000 sel=1 en=1 wr=0 addr=04 | prdata=00000034/00000014 pslverr=0/0 irq=0/0 ctrl_out=f7/f7 (got/exp) ists=3 ien=c\nFAIL: t=141111000 sel=1 en=1 wr=0 addr=04 | prdata=0000003f/0000001f pslverr=0/0 irq=0/0 ctrl_out=55/55 (got/exp) ists=f ien=0\nFAIL: t=165741000 sel=1 en=1 wr=0 addr=04 | prdata=00000038/00000018 pslverr=0/0 irq=0/0 ctrl_out=41/41 (got/exp) ists=f ien=0\nFAIL: t=175411000 sel=1 en=1 wr=0 addr=04 | prdata=00000025/00000005 pslverr=0/0 irq=0/0 ctrl_out=a4/a4 (got/exp) ists=f ien=0\nFAIL: t=175691000 sel=1 en=1 wr=0 addr=04 | prdata=00000024/00000004 pslverr=0/0 irq=0/0 ctrl_out=a4/a4 (got/exp) ists=f ien=0\nFAIL: t=175811000 sel=1 en=1 wr=0 addr=04 | prdata=00000027/00000007 pslverr=0/0 irq=0/0 ctrl_out=a4/a4 (got/exp) ists=e ien=0\nTEST FAILED: 23 errors\ntb.v:160: $finish called at 190215000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "skipped",
+    "method": null,
+    "note": "hidden simulation failed"
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all visible tests pass (`TEST PASSED`).",
+  "files_changed": [
+    {
+      "path": "rtl/apb_regs.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/apb_regs.v\n+++ b/rtl/apb_regs.v\n@@ -62,8 +62,8 @@\n         end else begin\n             if (wr_xfer && hit_ctrl)\n-                ctrl <= pwdata[7:0];\n+                ctrl <= {pwdata[7:4], 1'b0, pwdata[2:0]};\n             if (wr_xfer && hit_ien)\n                 int_en <= pwdata[3:0];\n-            int_status <= (int_status | hw_event) & ~w1c_mask;\n+            int_status <= (int_status & ~w1c_mask) | hw_event;\n         end\n     end\n"
+}

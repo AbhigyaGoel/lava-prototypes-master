@@ -1,0 +1,14 @@
+{
+  "id": "credit_tx",
+  "module": "credit_tx",
+  "top": "credit_tx",
+  "difficulty": "hard",
+  "bug_type": "missing_simultaneous_update+width_overflow+non_sticky_flag",
+  "bug_description": "credit return and send are if/else-if prioritized, so a send in the same cycle as a return does not consume a credit (moderate); credits + returned count is computed in CW bits, so with N = 2**CW-1 an over-return wraps instead of saturating at N and credit_err never fires (subtle); credit_err is rewritten on every return instead of being sticky (subtle).",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 12,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/credit_tx.v"]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "regfile",
+  "module": "regfile",
+  "top": "regfile",
+  "difficulty": "hard",
+  "bug_type": "missing_enable+missing_r0_priority",
+  "bug_description": "Port-2 bypass ignores we (returns stale wdata whenever waddr==raddr2); on both ports the bypass takes priority over the r0-reads-zero rule, so reading r0 while writing r0 returns wdata.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 10,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/regfile.v"]
+}

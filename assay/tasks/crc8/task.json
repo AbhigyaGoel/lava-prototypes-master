@@ -1,0 +1,14 @@
+{
+  "id": "crc8",
+  "module": "crc8",
+  "top": "crc8",
+  "difficulty": "easy",
+  "bug_type": "off_by_one+wrong_priority",
+  "bug_description": "Update loop runs 7 iterations instead of 8 (obvious, caught by visible TB); valid takes priority over clear, so a byte presented with clear is absorbed instead of discarded (subtle).",
+  "visible_tb_weak": false,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 20,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/crc8.v"]
+}

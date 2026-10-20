@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:52: $finish called at 8192000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "sat-comb",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is now fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/hamming_secded.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/hamming_secded.v\n+++ b/rtl/hamming_secded.v\n@@ -28,6 +28,6 @@\n             4'd6:    flip = 8'b0000_0100;\n             4'd7:    flip = 8'b0000_1000;\n-            4'd9:    flip = 8'b0010_0000;\n-            4'd10:   flip = 8'b0001_0000;\n+            4'd9:    flip = 8'b0001_0000;\n+            4'd10:   flip = 8'b0010_0000;\n             4'd11:   flip = 8'b0100_0000;\n             4'd12:   flip = 8'b1000_0000;\n@@ -36,11 +36,11 @@\n     end\n \n-    wire correctable = parity;\n+    wire correctable = parity && (syn <= 4'd12);\n \n     always @(*) begin\n         single_err = correctable;\n-        double_err = (syn != 4'd0) && !correctable;\n+        double_err = !correctable && (parity || (syn != 4'd0));\n         err_pos    = correctable ? syn : 4'd0;\n-        data       = raw ^ flip;\n+        data       = correctable ? (raw ^ flip) : raw;\n     end\n endmodule\n"
+}

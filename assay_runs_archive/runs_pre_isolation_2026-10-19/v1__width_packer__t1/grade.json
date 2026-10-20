@@ -1,0 +1,22 @@
+{
+  "verdict": "incorrect",
+  "hidden_sim": {
+    "passed": false,
+    "reason": "fail_marker",
+    "output_tail": "... t=381000 in_ready cnt=1 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=00000067 k=0001 l=1 | exp v=1 d=9d524340 k=1111 l=0\nFAIL: t=390000 out word cnt=1 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=00000067 k=0001 l=1 | exp v=1 d=9d524340 k=1111 l=0\nFAIL: t=400000 out word cnt=0 in_v=1 in_r=1 last=1 out_v=1 out_r=1 d=00000067 k=0001 l=1 | exp v=1 d=00006714 k=0011 l=1\nFAIL: t=511000 in_ready cnt=1 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=657a4ba8 k=1111 l=0 | exp v=1 d=657a4ba8 k=1111 l=0\nFAIL: t=520000 out word cnt=1 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=0000effc k=0011 l=1 | exp v=1 d=657a4ba8 k=1111 l=0\nFAIL: t=521000 in_ready cnt=1 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=0000effc k=0011 l=1 | exp v=1 d=657a4ba8 k=1111 l=0\nFAIL: t=530000 out word cnt=1 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=000000ef k=0001 l=1 | exp v=1 d=657a4ba8 k=1111 l=0\nFAIL: t=531000 in_ready cnt=1 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=000000ef k=0001 l=1 | exp v=1 d=657a4ba8 k=1111 l=0\nFAIL: t=540000 out word cnt=1 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=000000ef k=0001 l=1 | exp v=1 d=657a4ba8 k=1111 l=0\nFAIL: t=550000 out word cnt=0 in_v=1 in_r=1 last=1 out_v=1 out_r=1 d=000000ef k=0001 l=1 | exp v=1 d=0000effc k=0011 l=1\nFAIL: t=671000 in_ready cnt=2 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=2da25310 k=1111 l=0 | exp v=1 d=2da25310 k=1111 l=0\nFAIL: t=680000 out word cnt=2 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=005677e4 k=0111 l=1 | exp v=1 d=2da25310 k=1111 l=0\nFAIL: t=681000 in_ready cnt=2 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=005677e4 k=0111 l=1 | exp v=1 d=2da25310 k=1111 l=0\nFAIL: t=690000 out word cnt=2 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=00000056 k=0001 l=1 | exp v=1 d=2da25310 k=1111 l=0\nFAIL: t=691000 in_ready cnt=2 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=00000056 k=0001 l=1 | exp v=1 d=2da25310 k=1111 l=0\nFAIL: t=700000 out word cnt=2 in_v=1 in_r=1 last=1 out_v=1 out_r=0 d=00000056 k=0001 l=1 | exp v=1 d=2da25310 k=1111 l=0\nTEST FAILED: 4520 errors\ntb.v:134: $finish called at 271075000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "skipped",
+    "method": null,
+    "note": "hidden simulation failed"
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! The test passes.",
+  "files_changed": [
+    {
+      "path": "rtl/width_packer.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/width_packer.v\n+++ b/rtl/width_packer.v\n@@ -51,5 +51,11 @@\n             out_last  <= 1'b0;\n         end else if (pop) begin\n-            out_valid <= 1'b0;\n+            if (complete) begin\n+                out_data  <= word;\n+                out_keep  <= keep;\n+                out_last  <= in_last;\n+            end else begin\n+                out_valid <= 1'b0;\n+            end\n         end else if (complete) begin\n             out_valid <= 1'b1;\n"
+}

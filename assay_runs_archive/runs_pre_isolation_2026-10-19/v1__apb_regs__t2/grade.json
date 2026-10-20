@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:160: $finish called at 190215000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "All bugs fixed and tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/apb_regs.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/apb_regs.v\n+++ b/rtl/apb_regs.v\n@@ -62,8 +62,8 @@\n         end else begin\n             if (wr_xfer && hit_ctrl)\n-                ctrl <= pwdata[7:0];\n+                ctrl <= {pwdata[7:4], 1'b0, pwdata[2:0]};\n             if (wr_xfer && hit_ien)\n                 int_en <= pwdata[3:0];\n-            int_status <= (int_status | hw_event) & ~w1c_mask;\n+            int_status <= (int_status & ~w1c_mask) | hw_event;\n         end\n     end\n@@ -77,5 +77,5 @@\n             case (paddr)\n                 ADDR_CTRL:       prdata = {24'h000000, ctrl};\n-                ADDR_STATUS:     prdata = {26'h0000000, |int_status, ctrl[0], hw_status};\n+                ADDR_STATUS:     prdata = {26'h0000000, irq, ctrl[0], hw_status};\n                 ADDR_INT_STATUS: prdata = {28'h0000000, int_status};\n                 ADDR_INT_EN:     prdata = {28'h0000000, int_en};\n"
+}

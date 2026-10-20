@@ -1,0 +1,11 @@
+{
+  "id": "hamming_secded",
+  "module": "hamming_secded",
+  "top": "hamming_secded",
+  "difficulty": "hard",
+  "bug_type": "wrong_case_arm+missing_condition+wrong_mux",
+  "bug_description": "(1) correction-table arms for syndromes 9 and 10 flip data bits d5 and d4 swapped (subtle, one specific position pair); (2) odd parity with syndrome 13..15 is reported as a correctable single error instead of double_err (subtle corner); (3) the correction mask is applied to data on double errors, mis-correcting it (moderate).",
+  "visible_tb_weak": true,
+  "equiv_mode": "comb",
+  "files_in_scope": ["rtl/hamming_secded.v"]
+}

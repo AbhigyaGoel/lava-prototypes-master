@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:60: $finish called at 42495000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "k-induction",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all tests pass!",
+  "files_changed": [
+    {
+      "path": "rtl/rr_arbiter.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/rr_arbiter.v\n+++ b/rtl/rr_arbiter.v\n@@ -14,26 +14,26 @@\n         case (ptr)\n             2'd0: begin\n-                if      (req[0]) begin grant_c = 4'b0001; idx = 2'd0; end\n-                else if (req[1]) begin grant_c = 4'b0010; idx = 2'd1; end\n-                else if (req[2]) begin grant_c = 4'b0100; idx = 2'd2; end\n-                else if (req[3]) begin grant_c = 4'b1000; idx = 2'd3; end\n+                if      (req[0]) begin grant_c = 4'b0001; idx = 2'd1; end\n+                else if (req[1]) begin grant_c = 4'b0010; idx = 2'd2; end\n+                else if (req[2]) begin grant_c = 4'b0100; idx = 2'd3; end\n+                else if (req[3]) begin grant_c = 4'b1000; idx = 2'd0; end\n             end\n             2'd1: begin\n-                if      (req[1]) begin grant_c = 4'b0010; idx = 2'd1; end\n-                else if (req[2]) begin grant_c = 4'b0100; idx = 2'd2; end\n-                else if (req[3]) begin grant_c = 4'b1000; idx = 2'd3; end\n-                else if (req[0]) begin grant_c = 4'b0001; idx = 2'd0; end\n+                if      (req[1]) begin grant_c = 4'b0010; idx = 2'd2; end\n+                else if (req[2]) begin grant_c = 4'b0100; idx = 2'd3; end\n+                else if (req[3]) begin grant_c = 4'b1000; idx = 2'd0; end\n+                else if (req[0]) begin grant_c = 4'b0001; idx = 2'd1; end\n             end\n             2'd2: begin\n-                if      (req[2]) begin grant_c = 4'b0100; idx = 2'd2; end\n-                else if (req[3]) begin grant_c = 4'b1000; idx = 2'd3; end\n-                else if (req[1]) begin grant_c = 4'b0010; idx = 2'd1; end\n-                else if (req[0]) begin grant_c = 4'b0001; idx = 2'd0; end\n+                if      (req[2]) begin grant_c = 4'b0100; idx = 2'd3; end\n+                else if (req[3]) begin grant_c = 4'b1000; idx = 2'd0; end\n+                else if (req[0]) begin grant_c = 4'b0001; idx = 2'd1; end\n+                else if (req[1]) begin grant_c = 4'b0010; idx = 2'd2; end\n             end\n             default: begin\n-                if      (req[3]) begin grant_c = 4'b1000; idx = 2'd3; end\n-                else if (req[0]) begin grant_c = 4'b0001; idx = 2'd0; end\n-                else if (req[1]) begin grant_c = 4'b0010; idx = 2'd1; end\n-                else if (req[2]) begin grant_c = 4'b0100; idx = 2'd2; end\n+                if      (req[3]) begin grant_c = 4'b1000; idx = 2'd0; end\n+                else if (req[0]) begin grant_c = 4'b0001; idx = 2'd1; end\n+                else if (req[1]) begin grant_c = 4'b0010; idx = 2'd2; end\n+                else if (req[2]) begin grant_c = 4'b0100; idx = 2'd3; end\n             end\n         endcase\n"
+}

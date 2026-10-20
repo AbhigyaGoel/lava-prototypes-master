@@ -1,0 +1,19 @@
+{
+  "id": "edge_detector",
+  "module": "edge_detector",
+  "top": "edge_detector",
+  "difficulty": "medium",
+  "bug_type": "wrong_signal+wrong_reset_value",
+  "bug_description": "(1) rise uses sync1 & ~sync2 instead of sync2 & ~prev, firing one cycle early; (2) prev resets to 1, producing a spurious fall/any pulse right after reset.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 30,
+  "reset": {
+    "port": "rst_n",
+    "active": 0
+  },
+  "files_in_scope": [
+    "rtl/edge_detector.v"
+  ]
+}

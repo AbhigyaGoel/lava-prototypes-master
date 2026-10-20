@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:46: $finish called at 32000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "sat-comb",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/seg7_decoder.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/seg7_decoder.v\n+++ b/rtl/seg7_decoder.v\n@@ -15,5 +15,5 @@\n             4'h5: pat = 7'b1101101;\n             4'h6: pat = 7'b1111101;\n-            4'h7: pat = 7'b0100111;\n+            4'h7: pat = 7'b0000111;\n             4'h8: pat = 7'b1111111;\n             4'h9: pat = 7'b1101111;\n"
+}

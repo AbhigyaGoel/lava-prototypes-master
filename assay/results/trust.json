@@ -1,0 +1,393 @@
+{
+ "alu": {
+  "task": "alu",
+  "real_bugs": 37,
+  "visible_catches": 30,
+  "trust": 0.8108108108108109,
+  "missed": [
+   "bit0->1@538",
+   "neq->eq@893",
+   "flip@538",
+   "and->or@881",
+   "bit0->1@513",
+   "neq->eq@872",
+   "flip@513"
+  ]
+ },
+ "apb_regs": {
+  "task": "apb_regs",
+  "real_bugs": 33,
+  "visible_catches": 29,
+  "trust": 0.8787878787878788,
+  "missed": [
+   "and->or@1099",
+   "and->or@2240",
+   "and->or@1021",
+   "flip@2578"
+  ]
+ },
+ "clock_divider": {
+  "task": "clock_divider",
+  "real_bugs": 14,
+  "visible_catches": 10,
+  "trust": 0.7142857142857143,
+  "missed": [
+   "const+1@225",
+   "const+1@443",
+   "const-1@225",
+   "const-1@217"
+  ]
+ },
+ "crc8": {
+  "task": "crc8",
+  "real_bugs": 5,
+  "visible_catches": 5,
+  "trust": 1.0,
+  "missed": []
+ },
+ "credit_tx": {
+  "task": "credit_tx",
+  "real_bugs": 24,
+  "visible_catches": 20,
+  "trust": 0.8333333333333334,
+  "missed": [
+   "flip@2253",
+   "bit1->0@2253",
+   "gt->ge@1992",
+   "flip@2680"
+  ]
+ },
+ "debouncer": {
+  "task": "debouncer",
+  "real_bugs": 12,
+  "visible_catches": 7,
+  "trust": 0.5833333333333334,
+  "missed": [
+   "minus->plus@376",
+   "const+1@340",
+   "const+1@432",
+   "eq->neq@371",
+   "const+1@274"
+  ]
+ },
+ "div_seq": {
+  "task": "div_seq",
+  "real_bugs": 33,
+  "visible_catches": 25,
+  "trust": 0.7575757575757576,
+  "missed": [
+   "flip@1544",
+   "flip@1637",
+   "bit0->1@1637",
+   "const+1@1606",
+   "bit0->1@2227",
+   "bit0->1@1544",
+   "flip@2227",
+   "const+1@1575"
+  ]
+ },
+ "edge_detector": {
+  "task": "edge_detector",
+  "real_bugs": 9,
+  "visible_catches": 3,
+  "trust": 0.3333333333333333,
+  "missed": [
+   "flip@307",
+   "bit0->1@334",
+   "bit0->1@280",
+   "flip@334",
+   "bit0->1@307",
+   "flip@280"
+  ]
+ },
+ "gray_counter": {
+  "task": "gray_counter",
+  "real_bugs": 6,
+  "visible_catches": 5,
+  "trust": 0.8333333333333334,
+  "missed": [
+   "const+1@314"
+  ]
+ },
+ "hamming_secded": {
+  "task": "hamming_secded",
+  "real_bugs": 33,
+  "visible_catches": 19,
+  "trust": 0.5757575757575758,
+  "missed": [
+   "const+1@1277",
+   "const-1@1055",
+   "const+1@1055",
+   "const-1@1097",
+   "flip@903",
+   "const-1@887",
+   "flip@945",
+   "const-1@929",
+   "const-1@1013",
+   "flip@1071",
+   "flip@1029",
+   "const+1@887",
+   "flip@1113",
+   "const+1@1013"
+  ]
+ },
+ "int_ctrl": {
+  "task": "int_ctrl",
+  "real_bugs": 25,
+  "visible_catches": 19,
+  "trust": 0.76,
+  "missed": [
+   "flip@596",
+   "flip@1028",
+   "drop-not@1332",
+   "const+1@824",
+   "flip@1055",
+   "ge->gt@852"
+  ]
+ },
+ "mod10_counter": {
+  "task": "mod10_counter",
+  "real_bugs": 15,
+  "visible_catches": 11,
+  "trust": 0.7333333333333333,
+  "missed": [
+   "const+1@442",
+   "const-1@434",
+   "gt->ge@432",
+   "const+1@434"
+  ]
+ },
+ "mult_seq": {
+  "task": "mult_seq",
+  "real_bugs": 23,
+  "visible_catches": 22,
+  "trust": 0.9565217391304348,
+  "missed": [
+   "and->or@1226"
+  ]
+ },
+ "pipe_stage": {
+  "task": "pipe_stage",
+  "real_bugs": 16,
+  "visible_catches": 10,
+  "trust": 0.625,
+  "missed": [
+   "flip@751",
+   "bit1->0@1038",
+   "flip@828",
+   "bit0->1@828",
+   "bit1->0@751",
+   "flip@1038"
+  ]
+ },
+ "priority_encoder": {
+  "task": "priority_encoder",
+  "real_bugs": 19,
+  "visible_catches": 15,
+  "trust": 0.7894736842105263,
+  "missed": [
+   "const+1@483",
+   "const+1@343",
+   "const-1@343",
+   "flip@326"
+  ]
+ },
+ "pwm": {
+  "task": "pwm",
+  "real_bugs": 9,
+  "visible_catches": 4,
+  "trust": 0.4444444444444444,
+  "missed": [
+   "flip@380",
+   "const+1@269",
+   "eq->neq@377",
+   "const+1@297",
+   "plus->minus@349"
+  ]
+ },
+ "regfile": {
+  "task": "regfile",
+  "real_bugs": 31,
+  "visible_catches": 25,
+  "trust": 0.8064516129032258,
+  "missed": [
+   "const+1@451",
+   "const+1@415",
+   "const+1@427",
+   "const+1@499",
+   "const+1@487",
+   "and->or@1019"
+  ]
+ },
+ "rr_arbiter": {
+  "task": "rr_arbiter",
+  "real_bugs": 40,
+  "visible_catches": 19,
+  "trust": 0.475,
+  "missed": [
+   "const-1@859",
+   "flip@582",
+   "const+1@933",
+   "const-1@785",
+   "const-1@449",
+   "flip@1180",
+   "const-1@1534",
+   "flip@918",
+   "const+1@1195",
+   "const-1@1608",
+   "flip@844",
+   "const+1@1534",
+   "const+1@1269",
+   "const-1@523",
+   "const-1@1269",
+   "const+1@1608",
+   "const+1@449",
+   "const-1@1121",
+   "flip@1445",
+   "const+1@1460",
+   "const-1@597"
+  ]
+ },
+ "sat_adder": {
+  "task": "sat_adder",
+  "real_bugs": 6,
+  "visible_catches": 4,
+  "trust": 0.6666666666666666,
+  "missed": [
+   "gt->ge@326",
+   "lt->le@360"
+  ]
+ },
+ "seg7_decoder": {
+  "task": "seg7_decoder",
+  "real_bugs": 32,
+  "visible_catches": 16,
+  "trust": 0.5,
+  "missed": [
+   "flip@444",
+   "flip@516",
+   "flip@408",
+   "flip@396",
+   "flip@624",
+   "flip@660",
+   "flip@324",
+   "flip@360",
+   "flip@576",
+   "flip@696",
+   "flip@684",
+   "flip@612",
+   "flip@372",
+   "flip@588",
+   "flip@336",
+   "flip@504"
+  ]
+ },
+ "seq_detector": {
+  "task": "seq_detector",
+  "real_bugs": 4,
+  "visible_catches": 4,
+  "trust": 1.0,
+  "missed": []
+ },
+ "shift_reg": {
+  "task": "shift_reg",
+  "real_bugs": 2,
+  "visible_catches": 1,
+  "trust": 0.5,
+  "missed": [
+   "const+1@393"
+  ]
+ },
+ "spi_master": {
+  "task": "spi_master",
+  "real_bugs": 36,
+  "visible_catches": 19,
+  "trust": 0.5277777777777778,
+  "missed": [
+   "const+1@2459",
+   "bit0->1@1987",
+   "flip@1186",
+   "const+1@2107",
+   "eq->neq@1401",
+   "flip@3184",
+   "flip@1660",
+   "flip@1291",
+   "flip@1227",
+   "bit0->1@1660",
+   "drop-not@2589",
+   "flip@2077",
+   "eq->neq@1575",
+   "bit1->0@1209",
+   "bit1->0@1332",
+   "flip@1987",
+   "bit0->1@1291"
+  ]
+ },
+ "sync_fifo": {
+  "task": "sync_fifo",
+  "real_bugs": 28,
+  "visible_catches": 27,
+  "trust": 0.9642857142857143,
+  "missed": [
+   "const+1@794"
+  ]
+ },
+ "timer_irq": {
+  "task": "timer_irq",
+  "real_bugs": 25,
+  "visible_catches": 24,
+  "trust": 0.96,
+  "missed": [
+   "const-1@696"
+  ]
+ },
+ "token_bucket": {
+  "task": "token_bucket",
+  "real_bugs": 38,
+  "visible_catches": 35,
+  "trust": 0.9210526315789473,
+  "missed": [
+   "drop-not@2938",
+   "flip@1793",
+   "bit0->1@1793"
+  ]
+ },
+ "traffic_light": {
+  "task": "traffic_light",
+  "real_bugs": 38,
+  "visible_catches": 31,
+  "trust": 0.8157894736842105,
+  "missed": [
+   "and->or@1449",
+   "eq->neq@1443",
+   "flip@1496",
+   "bit0->1@1496",
+   "minus->plus@1008",
+   "eq->neq@1458",
+   "eq->neq@991"
+  ]
+ },
+ "uart_tx": {
+  "task": "uart_tx",
+  "real_bugs": 36,
+  "visible_catches": 31,
+  "trust": 0.8611111111111112,
+  "missed": [
+   "bit0->1@924",
+   "flip@924",
+   "const+1@1393",
+   "flip@895",
+   "bit1->0@895"
+  ]
+ },
+ "width_packer": {
+  "task": "width_packer",
+  "real_bugs": 36,
+  "visible_catches": 34,
+  "trust": 0.9444444444444444,
+  "missed": [
+   "flip@1360",
+   "const+1@1325"
+  ]
+ }
+}

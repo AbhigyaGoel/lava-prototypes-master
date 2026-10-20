@@ -1,0 +1,11 @@
+{
+  "id": "sat_adder",
+  "module": "sat_adder",
+  "top": "sat_adder",
+  "difficulty": "easy",
+  "bug_type": "wrong_overflow_operand",
+  "bug_description": "Overflow detection compares sign of the original b instead of the effective (negated) operand, so subtraction overflows are missed/misdetected (also breaks b=-128 subtract).",
+  "visible_tb_weak": false,
+  "equiv_mode": "comb",
+  "files_in_scope": ["rtl/sat_adder.v"]
+}

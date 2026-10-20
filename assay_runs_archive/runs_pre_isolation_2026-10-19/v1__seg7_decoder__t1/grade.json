@@ -1,0 +1,26 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:46: $finish called at 32000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "sat-comb",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! The design is now fixed.",
+  "files_changed": [
+    {
+      "path": "rtl/seg7_decoder.v",
+      "change": "modified"
+    },
+    {
+      "path": "verify_patterns.py",
+      "change": "added"
+    }
+  ],
+  "diff": "--- a/rtl/seg7_decoder.v\n+++ b/rtl/seg7_decoder.v\n@@ -15,5 +15,5 @@\n             4'h5: pat = 7'b1101101;\n             4'h6: pat = 7'b1111101;\n-            4'h7: pat = 7'b0100111;\n+            4'h7: pat = 7'b0000111;\n             4'h8: pat = 7'b1111111;\n             4'h9: pat = 7'b1101111;\n--- a/verify_patterns.py\n+++ b/verify_patterns.py\n@@ -0,0 +1,72 @@\n+# Verify all patterns from spec\n+spec = {\n+    0x0: \"a b c d e f\",\n+    0x1: \"b c\",\n+    0x2: \"a b d e g\",\n+    0x3: \"a b c d g\",\n+    0x4: \"b c f g\",\n+    0x5: \"a c d f g\",\n+    0x6: \"a c d e f g\",\n+    0x7: \"a b c\",\n+    0x8: \"a b c d e f g\",\n+    0x9: \"a b c d f g\",\n+    0xA: \"a b c e f g\",\n+    0xB: \"c d e f g\",\n+    0xC: \"a d e f\",\n+    0xD: \"b c d e g\",\n+    0xE: \"a d e f g\",\n+    0xF: \"a e f g\",\n+}\n+\n+# Map segments to bit indices\n+segments = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6}\n+\n+code_patterns = {\n+    0x0: 0b0111111,\n+    0x1: 0b0000110,\n+    0x2: 0b1011011,\n+    0x3: 0b1001111,\n+    0x4: 0b1100110,\n+    0x5: 0b1101101,\n+    0x6: 0b1111101,\n+    0x7: 0b0000111,\n+    0x8: 0b1111111,\n+    0x9: 0b1101111,\n+    0xA: 0b1110111,\n+    0xB: 0b1111100,\n+    0xC: 0b0111001,\n+    0xD: 0b1011110,\n+    0xE: 0b1111001,\n+    0xF: 0b1110001,\n+}\n+\n+print(\"Verifying patterns:\")\n+print(\"Hex Spec                 Expected   Code Pat   Code Out   Match\")\n+print(\"-\" * 65)\n+\n+errors = 0\n+for hex_val in range(16):\n+    lit_segments = spec[hex_val].split()\n+    lit_indices = {segments[s] for s in lit_segments}\n+    \n+    # Build expected output: 0 for lit, 1 for not lit (active-low)\n+    expected = 0\n+    for bit in range(7):\n+        if bit not in lit_indices:\n+            expected |= (1 << bit)\n+    \n+    code_pat = code_patterns[hex_val]\n+    code_out = ~code_pat & 0x7F  # Invert and mask to 7 bits\n+    \n+    match = code_out == expected\n+    if not match:\n+        errors += 1\n+    \n+    match_str = \"OK\" if match else \"FAIL\"\n+    \n+    print(f\"{hex_val:X}   {spec[hex_val]:<20} {expected:07b}       {code_pat:07b}       {code_out:07b}       {match_str}\")\n+\n+if errors > 0:\n+    print(f\"\\nFound {errors} errors\")\n+else:\n+    print(\"\\nAll patterns correct!\")\n"
+}

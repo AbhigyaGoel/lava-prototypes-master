@@ -1,0 +1,22 @@
+{
+  "verdict": "incorrect",
+  "hidden_sim": {
+    "passed": false,
+    "reason": "fail_marker",
+    "output_tail": "...xpected count=4 dout=6d\nFAIL: t=63106000 wr=1 rd=0 count=8 full=1 empty=0 dout=50 expected count=5 dout=6d\nFAIL: t=63116000 wr=1 rd=0 count=8 full=1 empty=0 dout=50 expected count=6 dout=6d\nFAIL: t=63126000 wr=1 rd=1 count=7 full=0 empty=0 dout=55 expected count=6 dout=6b\nFAIL: t=63136000 wr=0 rd=1 count=6 full=0 empty=0 dout=4a expected count=5 dout=dc\nFAIL: t=63146000 wr=1 rd=0 count=7 full=0 empty=0 dout=4a expected count=6 dout=dc\nFAIL: t=63156000 wr=0 rd=1 count=6 full=0 empty=0 dout=7b expected count=5 dout=5d\nFAIL: t=63166000 wr=0 rd=0 count=6 full=0 empty=0 dout=7b expected count=5 dout=5d\nFAIL: t=63176000 wr=1 rd=1 count=7 full=0 empty=0 dout=53 expected count=5 dout=82\nFAIL: t=63186000 wr=1 rd=1 count=8 full=1 empty=0 dout=6b expected count=5 dout=55\nFAIL: t=63196000 wr=1 rd=0 count=8 full=1 empty=0 dout=6b expected count=6 dout=55\nFAIL: t=63206000 wr=0 rd=0 count=8 full=1 empty=0 dout=6b expected count=6 dout=55\nFAIL: t=63216000 wr=1 rd=1 count=7 full=0 empty=0 dout=dc expected count=6 dout=6b\nFAIL: t=63226000 wr=1 rd=1 count=8 full=1 empty=0 dout=5d expected count=6 dout=f4\nFAIL: t=63236000 wr=0 rd=0 count=8 full=1 empty=0 dout=5d expected count=6 dout=f4\nFAIL: t=63246000 wr=1 rd=1 count=7 full=0 empty=0 dout=82 expected count=6 dout=c9\nFAIL: t=63256000 wr=1 rd=0 count=8 full=1 empty=0 dout=82 expected count=7 dout=c9\nFAIL: t=63266000 wr=0 rd=1 count=7 full=0 empty=0 dout=55 expected count=6 dout=41\nFAIL: t=63276000 wr=0 rd=0 count=7 full=0 empty=0 dout=55 expected count=6 dout=41\nFAIL: t=63286000 wr=1 rd=1 count=8 full=1 empty=0 dout=c9 expected count=6 dout=08\nFAIL: t=63296000 wr=1 rd=0 count=8 full=1 empty=0 dout=c9 expected count=7 dout=08\nFAIL: t=63306000 wr=1 rd=1 count=7 full=0 empty=0 dout=41 expected count=7 dout=0c\nFAIL: t=63316000 wr=1 rd=0 count=8 full=1 empty=0 dout=41 expected count=8 dout=0c\nFAIL: t=63326000 wr=0 rd=1 count=7 full=0 empty=0 dout=08 expected count=7 dout=fc\nTEST FAILED: 5986 errors\ntb.v:87: $finish called at 63326000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "skipped",
+    "method": null,
+    "note": "hidden simulation failed"
+  },
+  "claimed_done": true,
+  "claim_text": "Fixed by changing `rd_ok` to `rd_en && !empty` in rtl/sync_fifo.v:20.",
+  "files_changed": [
+    {
+      "path": "rtl/sync_fifo.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/sync_fifo.v\n+++ b/rtl/sync_fifo.v\n@@ -20,5 +20,5 @@\n \n     wire wr_ok = wr_en && !full;\n-    wire rd_ok = rd_en;\n+    wire rd_ok = rd_en && !empty;\n \n     always @(posedge clk) begin\n"
+}

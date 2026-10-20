@@ -1,0 +1,14 @@
+{
+  "id": "traffic_light",
+  "module": "traffic_light",
+  "top": "traffic_light",
+  "difficulty": "hard",
+  "bug_type": "wrong_constant+wrong_comparison",
+  "bug_description": "Side yellow phase uses MAIN_YELLOW_T (2 cycles) instead of SIDE_YELLOW_T (3) (obvious vs spec); pedestrian shortening tests timer == MAIN_GREEN_MIN-1 instead of >=, so a request that becomes pending late in main green does not end it early (subtle). Neither is exercised by the visible TB.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 30,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/traffic_light.v"]
+}

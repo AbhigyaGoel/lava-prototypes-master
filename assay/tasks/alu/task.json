@@ -1,0 +1,11 @@
+{
+  "id": "alu",
+  "module": "alu",
+  "top": "alu",
+  "difficulty": "medium",
+  "bug_type": "signed_unsigned_compare+wrong_overflow_formula",
+  "bug_description": "SLT uses an unsigned compare instead of signed; SUB overflow flag uses the ADD formula (a[7]==b[7]) instead of a[7]!=b[7].",
+  "visible_tb_weak": true,
+  "equiv_mode": "comb",
+  "files_in_scope": ["rtl/alu.v"]
+}

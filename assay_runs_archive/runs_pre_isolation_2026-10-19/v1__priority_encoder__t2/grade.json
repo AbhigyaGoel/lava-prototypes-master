@@ -1,0 +1,22 @@
+{
+  "verdict": "incorrect",
+  "hidden_sim": {
+    "passed": false,
+    "reason": "fail_marker",
+    "output_tail": "FAIL: in=00000000 y=111 valid=0 expected y=000 valid=0\nTEST FAILED: 1 errors\ntb.v:27: $finish called at 256000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "skipped",
+    "method": null,
+    "note": "hidden simulation failed"
+  },
+  "claimed_done": true,
+  "claim_text": "\u2713 Bug Fixed and All Tests Pass",
+  "files_changed": [
+    {
+      "path": "rtl/priority_encoder.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/priority_encoder.v\n+++ b/rtl/priority_encoder.v\n@@ -12,5 +12,5 @@\n             8'b001?????: y = 3'd5;\n             8'b0001????: y = 3'd4;\n-            8'b00001???: y = 3'd2;\n+            8'b00001???: y = 3'd3;\n             8'b000001??: y = 3'd2;\n             8'b0000001?: y = 3'd1;\n"
+}

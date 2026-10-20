@@ -1,0 +1,14 @@
+{
+  "id": "mult_seq",
+  "module": "mult_seq",
+  "top": "mult_seq",
+  "difficulty": "hard",
+  "bug_type": "missing_busy_guard+negation_overflow+sticky_flag",
+  "bug_description": "(1) start is accepted while busy, restarting the running operation (moderate); (2) the final-step negation of the multiplicand is done in 8 bits, so -(-128) wraps to -128 and a=-128 with negative b gives the wrong sign (subtle extreme value); (3) done is only cleared by the next start, so it stays high after the completion cycle instead of pulsing (subtle).",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 14,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/mult_seq.v"]
+}

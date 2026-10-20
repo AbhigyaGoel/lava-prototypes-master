@@ -1,0 +1,14 @@
+{
+  "id": "pipe_stage",
+  "module": "pipe_stage",
+  "top": "pipe_stage",
+  "difficulty": "hard",
+  "bug_type": "missing_state_clear+wrong_ready",
+  "bug_description": "skid_valid is not cleared when the skid word moves to the output register (duplicates, wedges full); in_ready = !skid_valid || out_ready accepts a word when full and the sink is ready, which is then dropped.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 15,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/pipe_stage.v"]
+}

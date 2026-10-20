@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:45: $finish called at 30216000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! **The design is fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/seq_detector.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/seq_detector.v\n+++ b/rtl/seq_detector.v\n@@ -18,5 +18,5 @@\n             S1:      next = din ? S1    : S10;\n             S10:     next = din ? S101  : IDLE;\n-            S101:    next = din ? S1011 : IDLE;\n+            S101:    next = din ? S1011 : S10;\n             S1011:   next = din ? S1    : S10;\n             default: next = IDLE;\n"
+}

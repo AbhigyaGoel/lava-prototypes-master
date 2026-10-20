@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:78: $finish called at 69210000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! The design is now fixed.",
+  "files_changed": [
+    {
+      "path": "rtl/debouncer.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/debouncer.v\n+++ b/rtl/debouncer.v\n@@ -14,5 +14,5 @@\n             cnt  <= 8'd0;\n         end else if (din != dout) begin\n-            if (cnt == N) begin\n+            if (cnt == N - 1) begin\n                 dout <= din;\n                 cnt  <= 8'd0;\n@@ -20,4 +20,6 @@\n                 cnt  <= cnt + 8'd1;\n             end\n+        end else begin\n+            cnt  <= 8'd0;\n         end\n     end\n"
+}

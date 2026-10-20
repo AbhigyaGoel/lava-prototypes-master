@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:31: $finish called at 131072000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "sat-comb",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Fixed.",
+  "files_changed": [
+    {
+      "path": "rtl/sat_adder.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/sat_adder.v\n+++ b/rtl/sat_adder.v\n@@ -6,9 +6,12 @@\n     output wire       sat\n );\n-    wire [7:0] b_eff = sub ? (~b + 8'd1) : b;\n-    wire [7:0] sum   = a + b_eff;\n-    wire       ovf   = (a[7] == b[7]) && (sum[7] != a[7]);\n+    wire signed [8:0] a_ext = {a[7], a};\n+    wire signed [8:0] b_ext = {b[7], b};\n+    wire signed [9:0] r     = sub ? (a_ext - b_ext) : (a_ext + b_ext);\n \n-    assign sat = ovf;\n-    assign y   = ovf ? (a[7] ? 8'h80 : 8'h7F) : sum;\n+    wire gt = (r > 10'sd127);\n+    wire lt = (r < -10'sd128);\n+\n+    assign sat = gt || lt;\n+    assign y   = gt ? 8'h7F : (lt ? 8'h80 : r[7:0]);\n endmodule\n"
+}

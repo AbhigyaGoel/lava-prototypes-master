@@ -1,0 +1,11 @@
+{
+  "id": "priority_encoder",
+  "module": "priority_encoder",
+  "top": "priority_encoder",
+  "difficulty": "easy",
+  "bug_type": "wrong_constant+wrong_default",
+  "bug_description": "(1) casez arm for bit 3 outputs y=2 instead of 3; (2) default arm (in==0) drives y=7 instead of 0.",
+  "visible_tb_weak": true,
+  "equiv_mode": "comb",
+  "files_in_scope": ["rtl/priority_encoder.v"]
+}

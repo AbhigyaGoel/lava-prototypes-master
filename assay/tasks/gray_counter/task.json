@@ -1,0 +1,14 @@
+{
+  "id": "gray_counter",
+  "module": "gray_counter",
+  "top": "gray_counter",
+  "difficulty": "easy",
+  "bug_type": "missing_enable",
+  "bug_description": "Enable input is ignored; counter advances every cycle.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 30,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/gray_counter.v"]
+}

@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:86: $finish called at 92666000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "Design is fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/timer_irq.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/timer_irq.v\n+++ b/rtl/timer_irq.v\n@@ -23,5 +23,5 @@\n         end else if (en && (count != 16'd0)) begin\n             if (count == 16'd1)\n-                count <= auto_reload ? (reload_val - 16'd1) : 16'd0;\n+                count <= auto_reload ? reload_val : 16'd0;\n             else\n                 count <= count - 16'd1;\n@@ -32,8 +32,8 @@\n         if (!rst_n)\n             irq <= 1'b0;\n+        else if (expire)\n+            irq <= 1'b1;\n         else if (irq_clr)\n             irq <= 1'b0;\n-        else if (expire)\n-            irq <= 1'b1;\n     end\n endmodule\n"
+}

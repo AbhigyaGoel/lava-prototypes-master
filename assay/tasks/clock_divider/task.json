@@ -1,0 +1,14 @@
+{
+  "id": "clock_divider",
+  "module": "clock_divider",
+  "top": "clock_divider",
+  "difficulty": "hard",
+  "bug_type": "missing_case+wrong_comparison",
+  "bug_description": "(1) Divisor clamp only handles div==0, so div==1 gives N=1 (tick stuck high, clk_out stuck low) instead of behaving like div==2; (2) terminal count uses cnt == N-1 instead of >=, so reducing div below the current count makes the counter run to 255 and wrap.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 30,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/clock_divider.v"]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "shift_reg",
+  "module": "shift_reg",
+  "top": "shift_reg",
+  "difficulty": "medium",
+  "bug_type": "wrong_bit_slice+missing_enable",
+  "bug_description": "(1) Right shift inserts constant 0 instead of sin at bit 7; (2) parallel load is nested under en, so load is ignored when en is low.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 30,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/shift_reg.v"]
+}

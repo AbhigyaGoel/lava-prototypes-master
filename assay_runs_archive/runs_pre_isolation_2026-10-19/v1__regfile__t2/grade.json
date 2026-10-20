@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:76: $finish called at 40165000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/regfile.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/regfile.v\n+++ b/rtl/regfile.v\n@@ -32,5 +32,5 @@\n     wire [63:0] regs_flat = {r7, r6, r5, r4, r3, r2, r1, 8'd0};\n \n-    assign rdata1 = (we && (waddr == raddr1)) ? wdata : regs_flat[raddr1*8 +: 8];\n-    assign rdata2 = (waddr == raddr2)         ? wdata : regs_flat[raddr2*8 +: 8];\n+    assign rdata1 = (raddr1 == 0) ? 8'h00 : (we && (waddr == raddr1)) ? wdata : regs_flat[raddr1*8 +: 8];\n+    assign rdata2 = (raddr2 == 0) ? 8'h00 : (we && (waddr == raddr2)) ? wdata : regs_flat[raddr2*8 +: 8];\n endmodule\n"
+}

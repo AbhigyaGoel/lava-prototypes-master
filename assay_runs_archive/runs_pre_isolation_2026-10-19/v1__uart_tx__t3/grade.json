@@ -1,0 +1,22 @@
+{
+  "verdict": "unverified",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:90: $finish called at 63410000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "unknown",
+    "method": "bmc-30",
+    "note": "no mismatch within 30 cycles after reset; unbounded proof not reached"
+  },
+  "claimed_done": true,
+  "claim_text": "Perfect! The design has been fixed and all tests pass.",
+  "files_changed": [
+    {
+      "path": "rtl/uart_tx.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/uart_tx.v\n+++ b/rtl/uart_tx.v\n@@ -24,5 +24,5 @@\n         if (!rst_n)\n             data_r <= 8'h00;\n-        else if (tx_start)\n+        else if (tx_start && !busy)\n             data_r <= tx_data;\n     end\n@@ -33,5 +33,5 @@\n             clk_cnt <= 16'd0;\n             bit_idx <= 3'd0;\n-            tx      <= 1'b0;\n+            tx      <= 1'b1;\n             busy    <= 1'b0;\n         end else begin\n@@ -40,4 +40,5 @@\n                     clk_cnt <= 16'd0;\n                     bit_idx <= 3'd0;\n+                    tx      <= 1'b1;\n                     if (tx_start) begin\n                         tx    <= 1'b0;\n"
+}

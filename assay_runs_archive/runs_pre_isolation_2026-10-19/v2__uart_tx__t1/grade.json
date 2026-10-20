@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:90: $finish called at 63410000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all tests pass (`TEST PASSED` on the visible testbench).",
+  "files_changed": [
+    {
+      "path": "rtl/uart_tx.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/uart_tx.v\n+++ b/rtl/uart_tx.v\n@@ -24,5 +24,5 @@\n         if (!rst_n)\n             data_r <= 8'h00;\n-        else if (tx_start)\n+        else if (state == S_IDLE && tx_start)\n             data_r <= tx_data;\n     end\n@@ -33,5 +33,5 @@\n             clk_cnt <= 16'd0;\n             bit_idx <= 3'd0;\n-            tx      <= 1'b0;\n+            tx      <= 1'b1;\n             busy    <= 1'b0;\n         end else begin\n"
+}

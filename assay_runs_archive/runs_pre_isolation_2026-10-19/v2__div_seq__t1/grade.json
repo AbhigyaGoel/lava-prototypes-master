@@ -1,0 +1,22 @@
+{
+  "verdict": "correct",
+  "hidden_sim": {
+    "passed": true,
+    "reason": "ok",
+    "output_tail": "TEST PASSED\ntb.v:115: $finish called at 786325000 (1ps)\n"
+  },
+  "equiv": {
+    "result": "proven",
+    "method": "equiv_induct",
+    "note": ""
+  },
+  "claimed_done": true,
+  "claim_text": "The design is fixed and all tests pass (`TEST PASSED`).",
+  "files_changed": [
+    {
+      "path": "rtl/div_seq.v",
+      "change": "modified"
+    }
+  ],
+  "diff": "--- a/rtl/div_seq.v\n+++ b/rtl/div_seq.v\n@@ -42,11 +42,16 @@\n         end else begin\n             done <= 1'b0;\n-            if (start) begin\n-                busy   <= 1'b1;\n-                rem    <= 8'd0;\n-                quo    <= dividend;\n-                dvs    <= divisor;\n-                step   <= 3'd0;\n-            end else if (busy) begin\n+            if (!busy) begin\n+                if (start) begin\n+                    busy   <= 1'b1;\n+                    rem    <= 8'd0;\n+                    quo    <= dividend;\n+                    dvs    <= divisor;\n+                    step   <= 3'd0;\n+                end\n+            end else if (abort) begin\n+                busy <= 1'b0;\n+                step <= 3'd0;\n+            end else begin\n                 rem  <= rem_next;\n                 quo  <= quo_next;\n@@ -57,8 +62,5 @@\n                     quotient  <= quo_next;\n                     remainder <= rem_next;\n-                    div0      <= (divisor == 8'd0);\n-                end else if (abort) begin\n-                    busy <= 1'b0;\n-                    step <= 3'd0;\n+                    div0      <= (dvs == 8'd0);\n                 end\n             end\n"
+}

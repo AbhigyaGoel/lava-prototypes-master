@@ -1,0 +1,9 @@
+runs/
+__pycache__/
+*.pyc
+.pytest_cache/
+sim
+*.vvp
+*.vcd
+runs_*.log
+demo/

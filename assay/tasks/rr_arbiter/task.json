@@ -1,0 +1,14 @@
+{
+  "id": "rr_arbiter",
+  "module": "rr_arbiter",
+  "top": "rr_arbiter",
+  "difficulty": "medium",
+  "bug_type": "pointer_update+wrong_priority_order",
+  "bug_description": "Pointer is set to the granted index instead of one past it (obvious; visible TB sees no rotation); in the ptr==2 branch requesters 0 and 1 are searched in the wrong order (2,3,1,0 instead of 2,3,0,1) (subtle).",
+  "visible_tb_weak": false,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 20,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/rr_arbiter.v"]
+}

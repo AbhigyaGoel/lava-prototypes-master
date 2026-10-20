@@ -1,0 +1,14 @@
+{
+  "id": "uart_tx",
+  "module": "uart_tx",
+  "top": "uart_tx",
+  "difficulty": "medium",
+  "bug_type": "wrong_reset_value+missing_enable",
+  "bug_description": "tx resets to 0 instead of idle-high and stays low until the first frame's stop bit (obvious vs spec); the data register captures tx_data on any tx_start, so a request during a frame corrupts the byte in flight (subtle). Neither is exercised by the visible TB.",
+  "visible_tb_weak": true,
+  "equiv_mode": "seq",
+  "equiv_seq": 10,
+  "bmc_depth": 30,
+  "reset": {"port": "rst_n", "active": 0},
+  "files_in_scope": ["rtl/uart_tx.v"]
+}

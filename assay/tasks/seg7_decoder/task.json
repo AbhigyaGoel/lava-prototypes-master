@@ -1,0 +1,11 @@
+{
+  "id": "seg7_decoder",
+  "module": "seg7_decoder",
+  "top": "seg7_decoder",
+  "difficulty": "easy",
+  "bug_type": "wrong_constant",
+  "bug_description": "Digit 7 also lights segment f (abcf instead of abc).",
+  "visible_tb_weak": true,
+  "equiv_mode": "comb",
+  "files_in_scope": ["rtl/seg7_decoder.v"]
+}
