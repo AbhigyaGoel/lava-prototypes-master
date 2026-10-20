@@ -197,3 +197,14 @@ def test_per_config_pass_k():
     p = per_config(_runs("a", [1, 1, 1, 1, 0, 0]), trials=3)
     assert p["pass_hat_3"]["k"] == 1 and p["pass_at_3"]["k"] == 2
     assert p["wrong_but_finished"] == 2
+
+
+# ---------- results ----------
+def test_build_results_keeps_existing_results_without_runs(tmp_path, monkeypatch):
+    import assay.build_results as br
+    out = tmp_path / "results.json"
+    out.write_text('{"kept": true}', encoding="utf-8")
+    monkeypatch.setattr(br, "RUNS_DIR", tmp_path / "no_runs")
+    monkeypatch.setattr(br, "RESULTS_DIR", tmp_path)
+    assert br.main([]) == 0
+    assert out.read_text(encoding="utf-8") == '{"kept": true}'
