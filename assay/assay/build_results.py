@@ -109,6 +109,14 @@ def main(argv: list[str]) -> int:
         if meta["task"] not in task_by_id or not meta.get("complete"):
             continue
         runs.append(build_run(run_dir, task_by_id[meta["task"]]))
+    out = RESULTS_DIR / "results.json"
+    if not runs:
+        # runs/ is gitignored: on a fresh checkout, keep the committed results instead of wiping them.
+        if out.is_file():
+            print(f"no complete runs in {RUNS_DIR}; keeping existing {out}")
+            return 0
+        print(f"no complete runs in {RUNS_DIR}; run `python -m assay run` first")
+        return 1
     config_ids = [c["id"] for c in cfg["configs"] if any(r["config"] == c["id"] for r in runs)]
     trials = cfg["trials"]
     per = {c: per_config([r for r in runs if r["config"] == c], trials) for c in config_ids}
@@ -142,7 +150,6 @@ def main(argv: list[str]) -> int:
         },
     }
     RESULTS_DIR.mkdir(exist_ok=True)
-    out = RESULTS_DIR / "results.json"
     out.write_text(json.dumps(results, indent=1), encoding="utf-8")
     print(f"wrote {out} ({len(runs)} runs, {len(used_tasks)} tasks, ${results['summary']['total_cost_usd']:.2f})")
     for c in config_ids:
