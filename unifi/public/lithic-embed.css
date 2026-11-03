@@ -1,0 +1,5 @@
+/* Styles Lithic's hosted card iframe to match the officer card face (frame 6). */
+body { margin: 0; font-family: "Inter", system-ui, sans-serif; background: #3a3a3a; color: #fff; }
+#card { padding: 24px; }
+#pan { font-size: 24px; font-weight: 600; letter-spacing: 3px; }
+#expiry, #cvv { font-size: 14px; }
